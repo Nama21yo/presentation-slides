@@ -1,0 +1,57 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/EnvironmentCoherenceSlide/a4712174ecf38468a9255d0afccf883d08b57377c6ce53715bea260323d9f995.mp4",
+      "rev_file": "slides/files/EnvironmentCoherenceSlide/a4712174ecf38468a9255d0afccf883d08b57377c6ce53715bea260323d9f995_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/EnvironmentCoherenceSlide/ac24d8f8e983f151f8d658fce448a913c1976d6b7b96ee9fd58b6fa2b4db1afa.mp4",
+      "rev_file": "slides/files/EnvironmentCoherenceSlide/ac24d8f8e983f151f8d658fce448a913c1976d6b7b96ee9fd58b6fa2b4db1afa_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/EnvironmentCoherenceSlide/3e343ccbcc211240a13dc9e9a8def3e93d67be88f2f0c5cd45be10d34f7bcb53.mp4",
+      "rev_file": "slides/files/EnvironmentCoherenceSlide/3e343ccbcc211240a13dc9e9a8def3e93d67be88f2f0c5cd45be10d34f7bcb53_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/EnvironmentCoherenceSlide/23811b800592e08bfb863d924ba356196def80c50e43e720611e6031a7c33630.mp4",
+      "rev_file": "slides/files/EnvironmentCoherenceSlide/23811b800592e08bfb863d924ba356196def80c50e43e720611e6031a7c33630_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

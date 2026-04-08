@@ -1,0 +1,81 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/ArchitectureSlide/84810debcaea337320e85da97d9632e4467560664f298617b30b13e997390cbd.mp4",
+      "rev_file": "slides/files/ArchitectureSlide/84810debcaea337320e85da97d9632e4467560664f298617b30b13e997390cbd_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/ArchitectureSlide/4f854f78230a64e257bab66212f88d21b87c3d5f90520c0a0cbc1464eaec7e0d.mp4",
+      "rev_file": "slides/files/ArchitectureSlide/4f854f78230a64e257bab66212f88d21b87c3d5f90520c0a0cbc1464eaec7e0d_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/ArchitectureSlide/4cbab21588666e93a54f5d7a59ff8232148027f0ec755a2451bca02f4f8b524d.mp4",
+      "rev_file": "slides/files/ArchitectureSlide/4cbab21588666e93a54f5d7a59ff8232148027f0ec755a2451bca02f4f8b524d_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/ArchitectureSlide/68015d11d182371a4262108c7edde06326b90f08c721f6943ba00196fd6e7abb.mp4",
+      "rev_file": "slides/files/ArchitectureSlide/68015d11d182371a4262108c7edde06326b90f08c721f6943ba00196fd6e7abb_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/ArchitectureSlide/ebcb1d85bd3088e802be928caa4663629cbc97599723e84c7e82bf93d3a1f9f2.mp4",
+      "rev_file": "slides/files/ArchitectureSlide/ebcb1d85bd3088e802be928caa4663629cbc97599723e84c7e82bf93d3a1f9f2_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/ArchitectureSlide/b4c5fd0c9d780d38a5d5872e2290de00d861243eee0c2f6133dfcbefd9e04946.mp4",
+      "rev_file": "slides/files/ArchitectureSlide/b4c5fd0c9d780d38a5d5872e2290de00d861243eee0c2f6133dfcbefd9e04946_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}
