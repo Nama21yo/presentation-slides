@@ -8,11 +8,11 @@ class LengthBarrierSlide(Slide):
         self.play(FadeIn(title, shift=UP))
 
         # 2. Setup the Timeline Background
-        timeline_bg = Rectangle(width=10, height=0.5, color=DARK_GRAY, fill_opacity=0.5).shift(UP*1.5)
+        timeline_bg = Rectangle(width=10, height=0.5, color=DARK_GRAY, fill_opacity=0.5).move_to(UP * 1.6)
         self.play(Create(timeline_bg))
 
         # 3. Animate to 10s and hit the wall
-        bar = Rectangle(width=1.6, height=0.5, color=BLUE, fill_opacity=1).align_to(timeline_bg, LEFT).shift(UP*1.5)
+        bar = Rectangle(width=1.6, height=0.5, color=BLUE, fill_opacity=1).move_to(timeline_bg).align_to(timeline_bg, LEFT)
         label_time = Text("10s", font_size=20).next_to(bar, DOWN)
         red_wall = Line(bar.get_corner(UR) + UP*0.5, bar.get_corner(DR) + DOWN*0.5, color=RED, stroke_width=6)
         
@@ -28,7 +28,7 @@ class LengthBarrierSlide(Slide):
 
         # 4. Break the wall, extend to 25s, and show overlapping loops
         self.play(FadeOut(red_wall))
-        bar_25s = Rectangle(width=4.1, height=0.5, color=TEAL, fill_opacity=1).align_to(timeline_bg, LEFT).shift(UP*1.5)
+        bar_25s = Rectangle(width=4.1, height=0.5, color=TEAL, fill_opacity=1).move_to(timeline_bg).align_to(timeline_bg, LEFT)
         label_25s = Text("25s (405 frames)", font_size=20).next_to(bar_25s, DOWN, aligned_edge=RIGHT)
         
         # Visualizing the 8-frame overlap with 5 loops
@@ -45,7 +45,7 @@ class LengthBarrierSlide(Slide):
         self.next_slide()
 
         # 5. Extend to full length and address Memory/Blending
-        bar_full = Rectangle(width=10, height=0.5, color=GREEN, fill_opacity=1).align_to(timeline_bg, LEFT).shift(UP*1.5)
+        bar_full = Rectangle(width=10, height=0.5, color=GREEN, fill_opacity=1).move_to(timeline_bg).align_to(timeline_bg, LEFT)
         label_full = Text("Long-Form Video", font_size=20).next_to(bar_full, DOWN, aligned_edge=RIGHT)
         
         self.play(Transform(bar, bar_full), Transform(label_time, label_full), FadeOut(loops))

@@ -8,9 +8,12 @@ class QualitySyncSlide(Slide):
         title = Text("Enhancing Tracking, Audio & Lip-Sync", font_size=36, weight=BOLD).to_edge(UP)
         self.play(FadeIn(title, shift=UP))
 
+        # Layout anchors
+        right_panel_anchor = RIGHT * 3 + UP * 1.2
+
         # 2. Visual Tracking Visualization (Top-Right)
         # Representing a stylized face
-        face_circle = Circle(radius=0.7, color=WHITE).shift(RIGHT * 3 + UP * 1)
+        face_circle = Circle(radius=0.7, color=WHITE).move_to(right_panel_anchor)
         left_eye = Dot(color=BLUE).move_to(face_circle.get_center() + LEFT*0.25 + UP*0.2)
         right_eye = Dot(color=BLUE).move_to(face_circle.get_center() + RIGHT*0.25 + UP*0.2)
         # The mouth we will pulsate later
@@ -41,11 +44,15 @@ class QualitySyncSlide(Slide):
         self.next_slide()
 
         # Generating a complex looking wave using a sine wave multiplied by random variations
-        x = np.linspace(-3, 3, 200)
+        x = np.linspace(-2.4, 2.4, 200)
         y = np.sin(x * 10) * np.random.uniform(0.1, 0.4, 200)
-        
-        # Creating a series of lines to represent the points
-        waveform_points = [RIGHT * (3 + val_x) + UP * (-1.5 + val_y) for val_x, val_y in zip(x, y)]
+
+        # Creating a series of lines to represent points centered under the face panel
+        waveform_center = face_group.get_center() + DOWN * 2.2
+        waveform_points = [
+            waveform_center + RIGHT * val_x + UP * val_y
+            for val_x, val_y in zip(x, y)
+        ]
         audio_waveform = VGroup(*[Line(waveform_points[i], waveform_points[i+1], color=YELLOW) for i in range(len(waveform_points)-1)])
         
         self.play(Create(audio_waveform, run_time=1.5))
@@ -71,15 +78,16 @@ class QualitySyncSlide(Slide):
         self.next_slide()
 
         # Visualizing a sound wave with a pop, then a smooth wave
+        pop_wave_center = LEFT * 4 + UP * 1
         pop_wave = VGroup(
-            Text("POP!", font_size=24, color=RED).shift(LEFT * 4 + UP * 1),
-            Line(LEFT*5 + UP*0.5, LEFT*3 + UP*1.5, color=RED),
-            Line(LEFT*5 + UP*1.5, LEFT*3 + UP*0.5, color=RED)
+            Text("POP!", font_size=24, color=RED).move_to(pop_wave_center),
+            Line(pop_wave_center + LEFT * 1 + DOWN * 0.5, pop_wave_center + RIGHT * 1 + UP * 0.5, color=RED),
+            Line(pop_wave_center + LEFT * 1 + UP * 0.5, pop_wave_center + RIGHT * 1 + DOWN * 0.5, color=RED)
         )
         
         smooth_wave = VGroup(
-            Text("Smooth Audio", font_size=24, color=GREEN).shift(LEFT * 4 + UP * 1),
-            FunctionGraph(lambda x: np.sin(x*5) * 0.3, x_range=[-5, -3], color=GREEN).shift(UP*1)
+            Text("Smooth Audio", font_size=24, color=GREEN).move_to(pop_wave_center),
+            FunctionGraph(lambda x: np.sin(x*5) * 0.3, x_range=(-1.0, 1.0), color=GREEN).move_to(pop_wave_center + DOWN * 0.5)
         )
 
         self.play(Create(pop_wave))
