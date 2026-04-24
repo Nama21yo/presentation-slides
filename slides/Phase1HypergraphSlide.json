@@ -1,0 +1,21 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1HypergraphSlide/98003ae57910f9859456970152f47873f0ef1bdbb59e5b2edd23e469d8802e38.mp4",
+      "rev_file": "slides/files/Phase1HypergraphSlide/98003ae57910f9859456970152f47873f0ef1bdbb59e5b2edd23e469d8802e38_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

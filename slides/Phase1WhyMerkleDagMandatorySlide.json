@@ -1,0 +1,57 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1WhyMerkleDagMandatorySlide/525c578bf616772e44aa28c64b04fba820c014cc1709a97746a2946a51ba6db4.mp4",
+      "rev_file": "slides/files/Phase1WhyMerkleDagMandatorySlide/525c578bf616772e44aa28c64b04fba820c014cc1709a97746a2946a51ba6db4_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1WhyMerkleDagMandatorySlide/e04dfe519810f26448e0dface8e7fbf30f4dfb99a20f3350f9e25bc261347516.mp4",
+      "rev_file": "slides/files/Phase1WhyMerkleDagMandatorySlide/e04dfe519810f26448e0dface8e7fbf30f4dfb99a20f3350f9e25bc261347516_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1WhyMerkleDagMandatorySlide/99637f152377f5b23c8a81ed3811638a3808da207115c1fce3aa2b9d1558653b.mp4",
+      "rev_file": "slides/files/Phase1WhyMerkleDagMandatorySlide/99637f152377f5b23c8a81ed3811638a3808da207115c1fce3aa2b9d1558653b_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1WhyMerkleDagMandatorySlide/eebe2a552b0ac1bf6a3a7fbfc38e4eca72b3446f7a4096386e976f9342500417.mp4",
+      "rev_file": "slides/files/Phase1WhyMerkleDagMandatorySlide/eebe2a552b0ac1bf6a3a7fbfc38e4eca72b3446f7a4096386e976f9342500417_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

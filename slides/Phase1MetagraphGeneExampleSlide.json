@@ -1,0 +1,21 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MetagraphGeneExampleSlide/3aa0d7cff8385c82925af2e43591fffd92d86b3e669f4d883928913e05d6550a.mp4",
+      "rev_file": "slides/files/Phase1MetagraphGeneExampleSlide/3aa0d7cff8385c82925af2e43591fffd92d86b3e669f4d883928913e05d6550a_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

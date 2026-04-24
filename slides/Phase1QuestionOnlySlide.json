@@ -1,0 +1,21 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1QuestionOnlySlide/e6defb90589cfcd16ad884bac24124eea6e09b654331871f71425c8327d15e85.mp4",
+      "rev_file": "slides/files/Phase1QuestionOnlySlide/e6defb90589cfcd16ad884bac24124eea6e09b654331871f71425c8327d15e85_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

@@ -1,0 +1,21 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1BinaryEdgesNotEnoughSlide/02fb438cef11479d805feec2aa0af03eff975473f653265d1979437531378af2.mp4",
+      "rev_file": "slides/files/Phase1BinaryEdgesNotEnoughSlide/02fb438cef11479d805feec2aa0af03eff975473f653265d1979437531378af2_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

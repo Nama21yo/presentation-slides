@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MerkleDagPathMapSlide/157e0f1497645b8d19fa66adaa641ea431468613a3364263ddbed51753bd136e.mp4",
+      "rev_file": "slides/files/Phase1MerkleDagPathMapSlide/157e0f1497645b8d19fa66adaa641ea431468613a3364263ddbed51753bd136e_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MerkleDagPathMapSlide/450935098664afbb86d30fa7d5424d73205234b11b006c4025198534e5f740f9.mp4",
+      "rev_file": "slides/files/Phase1MerkleDagPathMapSlide/450935098664afbb86d30fa7d5424d73205234b11b006c4025198534e5f740f9_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MerkleDagPathMapSlide/f39156072fb244f922d41c242d7a35b0755a3a17cf269be9db16a8b500dc7f5c.mp4",
+      "rev_file": "slides/files/Phase1MerkleDagPathMapSlide/f39156072fb244f922d41c242d7a35b0755a3a17cf269be9db16a8b500dc7f5c_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}
