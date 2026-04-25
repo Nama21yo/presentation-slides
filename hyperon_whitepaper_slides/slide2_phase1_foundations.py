@@ -881,3 +881,1243 @@ class Phase1ImmutabilityVersioningSlide(HyperonPhase1RefinedBase):
         self.play(Flash(root.get_center(), color=GREEN_B), FadeIn(trace), run_time=0.6)
 
         self.next_slide()
+
+
+class Phase1TrieShapeSlide(HyperonPhase1RefinedBase):
+    def _word_node(self, label: str, point, color=BLUE_B, radius: float = 0.28) -> VGroup:
+        node = Circle(radius=radius, color=color, fill_color=BLACK, fill_opacity=0.55, stroke_width=2.6)
+        node.move_to(point)
+        text = Text(label, font_size=18, color=color).move_to(node)
+        return VGroup(node, text)
+
+    def construct(self):
+        tag = self.text_box("Data structures for scale: The Trie", width=8.5, color=TEAL_B, font_size=29)
+        tag.to_edge(UP, buff=0.35)
+        subtitle = Text("Moving from flat lists to shared prefixes", font_size=22, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.18)
+
+        divider = Line(UP * 2.15, DOWN * 2.85, color=GRAY_D, stroke_width=1.8)
+
+        old_title = Text("Flat list", font_size=24, color=RED_B).move_to(LEFT * 4.25 + UP * 1.9)
+        rows = VGroup()
+        row_labels = ["thought_0001", "thought_0002", "thought_0003", "...", "thought_9999"]
+        for i, label in enumerate(row_labels):
+            row = RoundedRectangle(
+                corner_radius=0.04,
+                width=3.35,
+                height=0.43,
+                stroke_color=GRAY_B,
+                stroke_width=1.5,
+                fill_color=BLACK,
+                fill_opacity=0.22,
+            )
+            text = Text(label, font_size=16, color=GRAY_A).move_to(row)
+            row.move_to(LEFT * 4.25 + UP * (1.1 - i * 0.48))
+            text.move_to(row)
+            rows.add(VGroup(row, text))
+
+        scan_arrow = Arrow(
+            rows[0].get_right() + RIGHT * 0.1,
+            rows[-1].get_right() + RIGHT * 0.1,
+            buff=0.04,
+            color=RED_B,
+            stroke_width=4,
+            max_tip_length_to_length_ratio=0.12,
+        )
+        slow_label = Text("Slow search", font_size=20, color=RED_B).next_to(scan_arrow, RIGHT, buff=0.12)
+
+        new_title = Text("Prefix tree", font_size=24, color=GREEN_B).move_to(RIGHT * 3.35 + UP * 1.9)
+        positions = {
+            "root": RIGHT * 3.35 + UP * 1.05,
+            "C": RIGHT * 2.45 + UP * 0.1,
+            "A": RIGHT * 3.35 + DOWN * 0.75,
+            "T": RIGHT * 2.45 + DOWN * 1.65,
+            "R": RIGHT * 4.25 + DOWN * 1.65,
+        }
+        root = self._word_node("root", positions["root"], color=GRAY_A, radius=0.31)
+        c = self._word_node("C", positions["C"], color=YELLOW_B)
+        a = self._word_node("A", positions["A"], color=YELLOW_B)
+        t = self._word_node("T", positions["T"], color=GREEN_B)
+        r = self._word_node("R", positions["R"], color=GREEN_B)
+        tree_nodes = VGroup(root, c, a, t, r)
+
+        tree_edges = VGroup(
+            Line(root.get_bottom(), c.get_top(), color=YELLOW_B, stroke_width=4),
+            Line(c.get_bottom(), a.get_top(), color=YELLOW_B, stroke_width=4),
+            Line(a.get_bottom(), t.get_top(), color=GREEN_B, stroke_width=3),
+            Line(a.get_bottom(), r.get_top(), color=GREEN_B, stroke_width=3),
+        )
+        shared = Text("shared prefix: C-A", font_size=18, color=YELLOW_B).next_to(c, LEFT, buff=0.25)
+        cat = Text("CAT", font_size=18, color=GREEN_B).next_to(t, DOWN, buff=0.12)
+        car = Text("CAR", font_size=18, color=GREEN_B).next_to(r, DOWN, buff=0.12)
+
+        bullets = self.bullet_panel(
+            "Trie memory principle",
+            [
+                "Stores data by shape, not by scan order",
+                "Shared prefixes are stored exactly once",
+                "Removes huge redundancy in repeated structures",
+            ],
+            width=11.8,
+            title_color=TEAL_B,
+        )
+        bullets.to_edge(DOWN, buff=0.25)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(Create(divider), FadeIn(old_title), FadeIn(new_title), run_time=0.45)
+        self.play(FadeIn(rows, lag_ratio=0.08), run_time=0.85)
+        self.play(GrowArrow(scan_arrow), FadeIn(slow_label, shift=RIGHT * 0.08), run_time=0.55)
+        self.play(Create(tree_edges[:2]), FadeIn(VGroup(root, c, a)), FadeIn(shared), run_time=0.9)
+        self.play(Create(tree_edges[2:]), FadeIn(VGroup(t, r, cat, car)), run_time=0.75)
+        self.play(FadeIn(bullets, shift=UP * 0.08), run_time=0.75)
+        self.next_slide()
+
+
+class Phase1HierarchicalIndexingSlide(HyperonPhase1RefinedBase):
+    def _node(self, point, color=GRAY_C, radius: float = 0.08) -> Dot:
+        return Dot(point, radius=radius, color=color)
+
+    def construct(self):
+        tag = self.text_box("Hierarchical indexing", width=4.9, color=GREEN_B, font_size=30)
+        tag.to_edge(UP, buff=0.35)
+        subtitle = Text("Lookup cost follows the path length, not total memory size", font_size=22, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.18)
+
+        root_p = np.array([0.0, 1.25, 0.0])
+        level1 = [np.array([-4.6, 0.35, 0.0]), np.array([-1.55, 0.35, 0.0]), np.array([1.55, 0.35, 0.0]), np.array([4.6, 0.35, 0.0])]
+        level2 = []
+        for parent in level1:
+            level2.extend([parent + LEFT * 0.62 + DOWN * 0.85, parent + RIGHT * 0.62 + DOWN * 0.85])
+        level3 = []
+        for parent in level2:
+            level3.extend([parent + LEFT * 0.28 + DOWN * 0.75, parent + RIGHT * 0.28 + DOWN * 0.75])
+
+        dim_edges = VGroup()
+        for p in level1:
+            dim_edges.add(Line(root_p, p, color=GRAY_D, stroke_width=1.8))
+        for i, p in enumerate(level2):
+            dim_edges.add(Line(level1[i // 2], p, color=GRAY_D, stroke_width=1.6))
+        for i, p in enumerate(level3):
+            dim_edges.add(Line(level2[i // 2], p, color=GRAY_D, stroke_width=1.4))
+
+        dim_nodes = VGroup(self._node(root_p, color=GRAY_B, radius=0.11))
+        for p in level1:
+            dim_nodes.add(self._node(p, radius=0.09))
+        for p in level2:
+            dim_nodes.add(self._node(p, radius=0.075))
+        for p in level3:
+            dim_nodes.add(self._node(p, radius=0.06))
+
+        path_points = [root_p, level1[2], level2[5], level3[11]]
+        path_edges = VGroup(
+            Line(path_points[0], path_points[1], color=YELLOW_B, stroke_width=5),
+            Line(path_points[1], path_points[2], color=YELLOW_B, stroke_width=5),
+            Line(path_points[2], path_points[3], color=YELLOW_B, stroke_width=5),
+        )
+        path_nodes = VGroup(*[self._node(p, color=YELLOW_B, radius=0.12) for p in path_points])
+        spotlight = Circle(radius=0.42, color=YELLOW_B, stroke_width=3).move_to(path_points[-1])
+        path_label = Text("only this branch is touched", font_size=20, color=YELLOW_B)
+        path_label.next_to(path_edges[1], RIGHT, buff=0.26)
+
+        flat = self.bullet_panel(
+            "Traditional flat database",
+            [
+                "Search time grows with data size",
+                "Scans irrelevant items",
+                "Bottlenecks under AGI-scale memory",
+            ],
+            width=5.8,
+            title_color=RED_B,
+        ).to_edge(DOWN, buff=0.25).shift(LEFT * 3.0)
+        trie = self.bullet_panel(
+            "Hierarchical Trie",
+            [
+                "Search time follows key length",
+                "Skips irrelevant branches immediately",
+                "Keeps lookup behavior stable as memory grows",
+            ],
+            width=5.8,
+            title_color=GREEN_B,
+        ).to_edge(DOWN, buff=0.25).shift(RIGHT * 3.0)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(Create(dim_edges, lag_ratio=0.02), FadeIn(dim_nodes, lag_ratio=0.02), run_time=1.0)
+        self.play(dim_edges.animate.set_opacity(0.24), dim_nodes.animate.set_opacity(0.36), run_time=0.45)
+        self.play(Create(path_edges), FadeIn(path_nodes), Create(spotlight), FadeIn(path_label, shift=RIGHT * 0.08), run_time=0.9)
+        self.play(FadeIn(flat, shift=UP * 0.08), FadeIn(trie, shift=UP * 0.08), run_time=0.8)
+        self.next_slide()
+
+
+class Phase1PathBasedAddressingSlide(HyperonPhase1RefinedBase):
+    def _small_node(self, label: str, point, color=BLUE_B) -> VGroup:
+        node = RoundedRectangle(
+            corner_radius=0.08,
+            width=1.45,
+            height=0.46,
+            stroke_color=color,
+            stroke_width=2,
+            fill_color=BLACK,
+            fill_opacity=0.3,
+        ).move_to(point)
+        text = Text(label, font_size=17, color=color).move_to(node)
+        return VGroup(node, text)
+
+    def construct(self):
+        tag = self.text_box("Path-based addressing", width=5.4, color=YELLOW_B, font_size=30)
+        tag.to_edge(UP, buff=0.35)
+        subtitle = Text("The ID is the map", font_size=24, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.18)
+
+        left_title = Text("Path key", font_size=23, color=YELLOW_B).move_to(LEFT * 3.95 + UP * 1.65)
+        hash_box = self.text_box("A5 - B2 - C9", width=3.8, color=YELLOW_B, font_size=23, padding=0.22)
+        hash_box.move_to(LEFT * 3.95 + UP * 0.9)
+
+        steps = VGroup(
+            self.text_box("Turn left", width=2.1, color=BLUE_B, font_size=17, padding=0.18),
+            self.text_box("Turn right", width=2.25, color=TEAL_B, font_size=17, padding=0.18),
+            self.text_box("Turn left", width=2.1, color=GREEN_B, font_size=17, padding=0.18),
+        ).arrange(DOWN, buff=0.18)
+        steps.move_to(LEFT * 3.95 + DOWN * 0.48)
+        path_arrow = Arrow(hash_box.get_bottom(), steps.get_top(), buff=0.12, color=YELLOW_B, stroke_width=3)
+
+        right_title = Text("Structural locality", font_size=23, color=GREEN_B).move_to(RIGHT * 3.2 + UP * 1.65)
+        root = self._small_node("animal", RIGHT * 3.2 + UP * 1.0, color=GRAY_A)
+        branch = self._small_node("canine", RIGHT * 3.2 + UP * 0.22, color=GREEN_B)
+        dog = self._small_node("Dog", RIGHT * 1.9 + DOWN * 0.65, color=GREEN_B)
+        wolf = self._small_node("Wolf", RIGHT * 3.2 + DOWN * 0.65, color=GREEN_B)
+        fox = self._small_node("Fox", RIGHT * 4.5 + DOWN * 0.65, color=GREEN_B)
+        local_edges = VGroup(
+            Line(root.get_bottom(), branch.get_top(), color=GREEN_B, stroke_width=3),
+            Line(branch.get_bottom(), dog.get_top(), color=GREEN_B, stroke_width=3),
+            Line(branch.get_bottom(), wolf.get_top(), color=GREEN_B, stroke_width=3),
+            Line(branch.get_bottom(), fox.get_top(), color=GREEN_B, stroke_width=3),
+        )
+        cluster_ring = RoundedRectangle(
+            corner_radius=0.18,
+            width=4.35,
+            height=1.7,
+            stroke_color=GREEN_B,
+            stroke_width=2.4,
+            fill_color=GREEN_E,
+            fill_opacity=0.1,
+        ).move_to(RIGHT * 3.2 + DOWN * 0.25)
+        cache_label = Text("nearby in memory / cache", font_size=18, color=GREEN_B).next_to(cluster_ring, DOWN, buff=0.12)
+
+        bullets = self.bullet_panel(
+            "Why this matters",
+            [
+                "Efficient lookup: key bytes act like turn-by-turn directions",
+                "Locality-aware keys can place related concepts on nearby branches",
+                "Clustered data is friendlier to CPU cache and parallel traversal",
+            ],
+            width=11.8,
+            title_color=YELLOW_B,
+        )
+        bullets.to_edge(DOWN, buff=0.24)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(left_title), FadeIn(hash_box), run_time=0.6)
+        self.play(GrowArrow(path_arrow), FadeIn(steps, lag_ratio=0.12), run_time=0.85)
+        self.play(FadeIn(right_title), FadeIn(root), FadeIn(branch), Create(local_edges[0]), run_time=0.65)
+        self.play(FadeIn(VGroup(dog, wolf, fox)), Create(local_edges[1:]), FadeIn(cluster_ring), run_time=0.9)
+        self.play(FadeIn(cache_label), FadeIn(bullets, shift=UP * 0.08), run_time=0.75)
+        self.next_slide()
+
+
+class Phase1QuantaleBase(HyperonPhase1RefinedBase):
+    formula_font = "DejaVu Sans"
+
+    def formula_text(self, text: str, font_size: int = 25, color=WHITE, width: float | None = None) -> Text:
+        label = Text(text, font_size=font_size, color=color, font=self.formula_font, line_spacing=1.08)
+        if width is not None:
+            self._fit(label, width)
+        return label
+
+    def formula_box(
+        self,
+        text: str,
+        width: float,
+        color=WHITE,
+        font_size: int = 24,
+        padding: float = 0.18,
+        fill_opacity: float = 0.2,
+    ) -> VGroup:
+        label = self.formula_text(text, font_size=font_size, color=color, width=width - 2 * padding)
+        box = RoundedRectangle(
+            corner_radius=0.08,
+            width=width,
+            height=label.height + 2 * padding,
+            stroke_color=color,
+            stroke_width=2,
+            fill_color=BLACK,
+            fill_opacity=fill_opacity,
+        )
+        label.move_to(box)
+        return VGroup(box, label)
+
+    def concept_node(self, label: str, point, width: float = 2.05, color=BLUE_B, font_size: int = 15) -> VGroup:
+        node = RoundedRectangle(
+            corner_radius=0.08,
+            width=width,
+            height=0.48,
+            stroke_color=color,
+            stroke_width=2,
+            fill_color=BLACK,
+            fill_opacity=0.32,
+        ).move_to(point)
+        text = Text(label, font_size=font_size, color=color, line_spacing=1.0)
+        self._fit(text, width - 0.22, min_size=10)
+        text.move_to(node)
+        return VGroup(node, text)
+
+    def arrow_between(self, start: VGroup, end: VGroup, color=GRAY_B, width: float = 2.4) -> Arrow:
+        return Arrow(
+            start.get_top(),
+            end.get_bottom(),
+            buff=0.08,
+            color=color,
+            stroke_width=width,
+            max_tip_length_to_length_ratio=0.11,
+        )
+
+    def build_vehicle_mammal_hasse(self, center=ORIGIN, scale: float = 1.0, highlight: bool = False) -> VGroup:
+        nodes = {
+            "vehicle": self.concept_node("Vehicle", [-1.25, 1.25, 0], width=1.65, color=GREEN_B),
+            "mammal": self.concept_node("Mammal", [1.25, 1.25, 0], width=1.65, color=GREEN_B),
+            "car": self.concept_node("Car", [-1.25, 0.34, 0], width=1.35, color=TEAL_B),
+            "dog": self.concept_node("Dog", [0.72, 0.34, 0], width=1.35, color=TEAL_B),
+            "sedan": self.concept_node("Sedan", [-1.25, -0.58, 0], width=1.45, color=BLUE_B),
+            "retriever": self.concept_node("Retriever", [1.25, -0.58, 0], width=1.7, color=BLUE_B),
+            "black_sedan": self.concept_node("Black sedan\nplate X", [-1.25, -1.62, 0], width=2.0, color=YELLOW_B, font_size=13),
+            "golden": self.concept_node("Golden retriever\nborn 2022", [1.25, -1.62, 0], width=2.2, color=YELLOW_B, font_size=13),
+        }
+        edges = VGroup(
+            self.arrow_between(nodes["black_sedan"], nodes["sedan"]),
+            self.arrow_between(nodes["sedan"], nodes["car"]),
+            self.arrow_between(nodes["car"], nodes["vehicle"]),
+            self.arrow_between(nodes["golden"], nodes["retriever"]),
+            self.arrow_between(nodes["retriever"], nodes["dog"]),
+            self.arrow_between(nodes["dog"], nodes["mammal"]),
+        )
+        group = VGroup(edges, *nodes.values())
+        if highlight:
+            path = VGroup(
+                self.arrow_between(nodes["black_sedan"], nodes["sedan"], color=YELLOW_B, width=4.3),
+                self.arrow_between(nodes["sedan"], nodes["car"], color=YELLOW_B, width=4.3),
+                self.arrow_between(nodes["car"], nodes["vehicle"], color=YELLOW_B, width=4.3),
+            )
+            group.add(path)
+        group.scale(scale).move_to(center)
+        return group
+
+
+class Phase1LatticeHierarchySlide(Phase1QuantaleBase):
+    def construct(self):
+        tag = self.text_box("Lattices: Organizing Concepts in a Hierarchy", width=9.3, color=GREEN_B, font_size=29)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("The geometry of specificity vs. generality", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        hasse = self.build_vehicle_mammal_hasse(center=LEFT * 3.15 + DOWN * 0.1, scale=0.92, highlight=True)
+        top_label = self.text_box("Weak / General / Simple", width=3.5, color=GREEN_B, font_size=16, padding=0.16)
+        top_label.move_to(LEFT * 3.15 + UP * 2.1)
+        bottom_label = self.text_box("Strong / Specific / Complex", width=3.8, color=YELLOW_B, font_size=16, padding=0.16)
+        bottom_label.move_to(LEFT * 3.15 + DOWN * 2.65)
+
+        relation = self.bullet_panel(
+            "Partial order relation (≤)",
+            [
+                "Ranks concepts by specificity and complexity",
+                "a ≤ b means: a is stronger / more specific than b",
+            ],
+            width=6.3,
+            title_color=YELLOW_B,
+        ).to_edge(RIGHT, buff=0.35).shift(UP * 0.85)
+
+        ax_title = Text("Partial order axioms", font_size=20, color=BLUE_B)
+        ax_title.move_to(RIGHT * 3.1 + DOWN * 0.55)
+        axioms = VGroup(
+            Text("Reflexivity:     a <= a", font_size=18, color=BLUE_B, font="Noto Sans Mono", disable_ligatures=True),
+            Text("Antisymmetry:   a <= b, b <= a  ->  a = b", font_size=15, color=TEAL_B, font="Noto Sans Mono", disable_ligatures=True),
+            Text("Transitivity:   a <= b, b <= c  ->  a <= c", font_size=15, color=GREEN_B, font="Noto Sans Mono", disable_ligatures=True),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.22)
+        for line in axioms:
+            self._fit(line, 5.8)
+        axioms.move_to(RIGHT * 3.1 + DOWN * 1.55)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(VGroup(top_label, bottom_label)), FadeIn(hasse, lag_ratio=0.03), run_time=1.0)
+        self.play(FadeIn(relation, shift=LEFT * 0.08), run_time=0.75)
+        self.play(FadeIn(ax_title), FadeIn(axioms, lag_ratio=0.08), run_time=0.85)
+        self.next_slide()
+
+
+class Phase1LatticeOperationsSlide(Phase1QuantaleBase):
+    def _join_diagram(self) -> VGroup:
+        mammal = self.concept_node("Mammal", UP * 0.8, width=1.65, color=YELLOW_B)
+        dog = self.concept_node("Dog", LEFT * 0.85 + DOWN * 0.42, width=1.25, color=BLUE_B)
+        cat = self.concept_node("Cat", RIGHT * 0.85 + DOWN * 0.42, width=1.25, color=BLUE_B)
+        animal = self.concept_node("Animal", UP * 1.55, width=1.5, color=GRAY_B)
+        edges = VGroup(
+            Arrow(dog.get_top(), mammal.get_bottom() + LEFT * 0.28, buff=0.07, color=YELLOW_B, stroke_width=3.4),
+            Arrow(cat.get_top(), mammal.get_bottom() + RIGHT * 0.28, buff=0.07, color=YELLOW_B, stroke_width=3.4),
+            Line(mammal.get_top(), animal.get_bottom(), color=GRAY_C, stroke_width=2),
+        )
+        label = self.formula_box("Dog ⊕ Cat = Mammal", width=3.25, color=YELLOW_B, font_size=18)
+        label.next_to(VGroup(dog, cat), DOWN, buff=0.18)
+        return VGroup(edges, animal, mammal, dog, cat, label)
+
+    def _meet_diagram(self) -> VGroup:
+        object_node = self.concept_node("Thing", UP * 1.55, width=1.35, color=GRAY_B)
+        wheels = self.concept_node("Has wheels", LEFT * 0.95 + UP * 0.48, width=1.8, color=TEAL_B, font_size=14)
+        human = self.concept_node("Human powered", RIGHT * 0.95 + UP * 0.48, width=2.1, color=TEAL_B, font_size=14)
+        bicycle = self.concept_node("Bicycle", DOWN * 0.58, width=1.55, color=YELLOW_B)
+        edges = VGroup(
+            Line(object_node.get_bottom(), wheels.get_top(), color=GRAY_C, stroke_width=2),
+            Line(object_node.get_bottom(), human.get_top(), color=GRAY_C, stroke_width=2),
+            Arrow(wheels.get_bottom(), bicycle.get_top() + LEFT * 0.24, buff=0.07, color=YELLOW_B, stroke_width=3.4),
+            Arrow(human.get_bottom(), bicycle.get_top() + RIGHT * 0.24, buff=0.07, color=YELLOW_B, stroke_width=3.4),
+        )
+        label = self.formula_box("Wheels ∧ Human powered = Bicycle", width=3.85, color=YELLOW_B, font_size=15)
+        label.next_to(bicycle, DOWN, buff=0.18)
+        return VGroup(edges, object_node, wheels, human, bicycle, label)
+
+    def construct(self):
+        tag = self.text_box("Lattices: Navigating the Hierarchy", width=7.4, color=TEAL_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Mathematical operations combine concepts logically", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        left_title = Text("Join: generalize upward", font_size=22, color=YELLOW_B).move_to(LEFT * 3.3 + UP * 1.85)
+        right_title = Text("Meet: specialize downward", font_size=22, color=YELLOW_B).move_to(RIGHT * 3.25 + UP * 1.85)
+        join = self._join_diagram().scale(0.82).move_to(LEFT * 3.25 + UP * 0.32)
+        meet = self._meet_diagram().scale(0.82).move_to(RIGHT * 3.25 + UP * 0.32)
+        divider = Line(UP * 1.95, DOWN * 2.35, color=GRAY_D, stroke_width=1.7)
+
+        left = self.bullet_panel(
+            "Join (⊕ or ∨) - logical OR",
+            [
+                "Finds the Least Upper Bound",
+                "Moves up to GENERALIZE",
+                "Dog ⊕ Cat = Mammal",
+            ],
+            width=5.75,
+            title_color=BLUE_B,
+        ).to_edge(DOWN, buff=0.22).shift(LEFT * 3.0)
+        right = self.bullet_panel(
+            "Meet (∧) - logical AND",
+            [
+                "Finds the Greatest Lower Bound",
+                "Moves down to SPECIALIZE",
+                "Wheels ∧ Human powered = Bicycle",
+            ],
+            width=5.75,
+            title_color=GREEN_B,
+        ).to_edge(DOWN, buff=0.22).shift(RIGHT * 3.0)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(Create(divider), FadeIn(left_title), FadeIn(right_title), run_time=0.45)
+        self.play(FadeIn(join, lag_ratio=0.04), FadeIn(meet, lag_ratio=0.04), run_time=1.0)
+        self.play(FadeIn(left, shift=UP * 0.08), FadeIn(right, shift=UP * 0.08), run_time=0.8)
+        self.next_slide()
+
+
+class Phase1QuantaleActionSlide(Phase1QuantaleBase):
+    def _mini_lattice(self) -> VGroup:
+        top = self.concept_node("general", UP * 0.85, width=1.55, color=GREEN_B, font_size=14)
+        mid_l = self.concept_node("case A", LEFT * 0.75, width=1.35, color=TEAL_B, font_size=13)
+        mid_r = self.concept_node("case B", RIGHT * 0.75, width=1.35, color=TEAL_B, font_size=13)
+        bottom = self.concept_node("specific", DOWN * 0.9, width=1.65, color=YELLOW_B, font_size=14)
+        lines = VGroup(
+            Line(bottom.get_top(), mid_l.get_bottom(), color=GRAY_B, stroke_width=2),
+            Line(bottom.get_top(), mid_r.get_bottom(), color=GRAY_B, stroke_width=2),
+            Line(mid_l.get_top(), top.get_bottom(), color=GRAY_B, stroke_width=2),
+            Line(mid_r.get_top(), top.get_bottom(), color=GRAY_B, stroke_width=2),
+        )
+        title = Text("Complete Lattice", font_size=19, color=GREEN_B).next_to(top, UP, buff=0.25)
+        return VGroup(lines, top, mid_l, mid_r, bottom, title)
+
+    def _sequence_panel(self, labels: list[str], result: str, color, y: float) -> VGroup:
+        a = self.formula_box(labels[0], width=1.15, color=color, font_size=20, padding=0.15)
+        b = self.formula_box(labels[1], width=1.15, color=color, font_size=20, padding=0.15)
+        out = self.text_box(result, width=1.7, color=color, font_size=17, padding=0.16)
+        row = VGroup(
+            a,
+            Arrow(ORIGIN, RIGHT * 0.6, color=color, stroke_width=3, max_tip_length_to_length_ratio=0.18),
+            b,
+            Arrow(ORIGIN, RIGHT * 0.6, color=color, stroke_width=3, max_tip_length_to_length_ratio=0.18),
+            out,
+        ).arrange(RIGHT, buff=0.15)
+        row.move_to(RIGHT * 3.1 + UP * y)
+        formula = self.formula_text(f"{labels[0]} ⊗ {labels[1]}", font_size=18, color=color).next_to(row, DOWN, buff=0.08)
+        return VGroup(row, formula)
+
+    def construct(self):
+        tag = self.text_box("Quantales: Adding Action to the Lattice", width=8.2, color=ORANGE, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Upgrading a static hierarchy into an active reasoning engine", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        lattice = self._mini_lattice().scale(0.98).move_to(LEFT * 4.2 + UP * 0.35)
+        plus = self.formula_box("+ sequence\nmultiplication ⊗", width=2.45, color=ORANGE, font_size=18, padding=0.2)
+        plus.move_to(LEFT * 0.85 + UP * 0.35)
+        upgrade_arrow = Arrow(lattice.get_right(), plus.get_left(), buff=0.15, color=ORANGE, stroke_width=4)
+        action_arrow = Arrow(plus.get_right(), RIGHT * 1.1 + UP * 0.35, buff=0.1, color=ORANGE, stroke_width=4)
+
+        q_title = Text("Quantale", font_size=24, color=ORANGE).move_to(RIGHT * 3.1 + UP * 1.8)
+        success = self._sequence_panel(["a", "b"], "success", GREEN_B, 0.75)
+        failure = self._sequence_panel(["b", "a"], "halt", RED_B, -0.55)
+
+        foundation = self.formula_box("Q = Complete Lattice + Multiplication (⊗)", width=5.45, color=YELLOW_B, font_size=18)
+        foundation.to_edge(DOWN, buff=0.32).shift(LEFT * 3.25)
+        law = self.formula_box("Distributive law\na ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c)", width=6.0, color=GREEN_B, font_size=17)
+        law.to_edge(DOWN, buff=0.32).shift(RIGHT * 3.0)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(lattice, lag_ratio=0.05), run_time=0.8)
+        self.play(GrowArrow(upgrade_arrow), FadeIn(plus), GrowArrow(action_arrow), run_time=0.8)
+        self.play(FadeIn(q_title), FadeIn(success, shift=RIGHT * 0.08), FadeIn(failure, shift=RIGHT * 0.08), run_time=0.85)
+        self.play(FadeIn(foundation), FadeIn(law), run_time=0.85)
+        self.next_slide()
+
+
+class Phase1QuantalePowersSlide(Phase1QuantaleBase):
+    def _sequence_power(self) -> VGroup:
+        good = VGroup(
+            self.formula_box("a", 0.75, GREEN_B, 18, 0.12),
+            Arrow(ORIGIN, RIGHT * 0.4, color=GREEN_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.2),
+            self.formula_box("b", 0.75, GREEN_B, 18, 0.12),
+            Arrow(ORIGIN, RIGHT * 0.4, color=GREEN_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.2),
+            self.text_box("success", 1.25, GREEN_B, 14, 0.12),
+        ).arrange(RIGHT, buff=0.1)
+        bad = VGroup(
+            self.formula_box("b", 0.75, RED_B, 18, 0.12),
+            Arrow(ORIGIN, RIGHT * 0.4, color=RED_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.2),
+            self.formula_box("a", 0.75, RED_B, 18, 0.12),
+            Arrow(ORIGIN, RIGHT * 0.4, color=RED_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.2),
+            self.text_box("crash", 1.15, RED_B, 14, 0.12),
+        ).arrange(RIGHT, buff=0.1)
+        bad.next_to(good, DOWN, buff=0.22)
+        title = Text("Composition", font_size=21, color=GREEN_B).next_to(good, UP, buff=0.22)
+        note = self.formula_text("a ⊗ b ≠ b ⊗ a", font_size=18, color=YELLOW_B).next_to(bad, DOWN, buff=0.14)
+        return VGroup(title, good, bad, note)
+
+    def _uncertainty_power(self) -> VGroup:
+        title = Text("Uncertainty", font_size=21, color=BLUE_B)
+        s1 = Text("strength", font_size=14, color=GRAY_A)
+        c1 = Text("confidence", font_size=14, color=GRAY_A)
+        bars = VGroup()
+        specs = [(2.0, GREEN_B), (1.45, BLUE_B), (1.65, GREEN_B), (1.05, BLUE_B)]
+        labels = [s1, c1, Text("strength", font_size=14, color=GRAY_A), Text("confidence", font_size=14, color=GRAY_A)]
+        for i, (w, color) in enumerate(specs):
+            track = Rectangle(width=2.2, height=0.16, stroke_color=GRAY_C, stroke_width=1.2)
+            fill = Rectangle(width=w, height=0.16, stroke_color=color, fill_color=color, fill_opacity=0.7, stroke_width=0)
+            fill.align_to(track, LEFT)
+            row = VGroup(labels[i], VGroup(track, fill)).arrange(RIGHT, buff=0.12)
+            bars.add(row)
+        bars.arrange(DOWN, aligned_edge=LEFT, buff=0.16)
+        merge = self.formula_box("TV₁ ⊗ TV₂", width=2.4, color=YELLOW_B, font_size=18, padding=0.14)
+        merge.next_to(bars, DOWN, buff=0.2)
+        title.next_to(bars, UP, buff=0.2)
+        return VGroup(title, bars, merge)
+
+    def _residual_power(self) -> VGroup:
+        simple = self.text_box("simple model a", width=2.5, color=GREEN_B, font_size=16, padding=0.16)
+        complex_m = self.text_box("complex model b", width=2.7, color=RED_B, font_size=16, padding=0.16)
+        missing = self.text_box("missing c", width=1.8, color=YELLOW_B, font_size=15, padding=0.14)
+        simple.move_to(LEFT * 2.4)
+        complex_m.move_to(RIGHT * 2.2)
+        missing.move_to(ORIGIN + DOWN * 0.7)
+        arrows = VGroup(
+            Arrow(complex_m.get_left(), missing.get_right(), buff=0.12, color=YELLOW_B, stroke_width=3),
+            Arrow(missing.get_left(), simple.get_right(), buff=0.12, color=YELLOW_B, stroke_width=3),
+        )
+        penalty = Text("Weakness penalty", font_size=18, color=YELLOW_B).next_to(missing, DOWN, buff=0.16)
+        title = Text("Reasoning and simplicity prior", font_size=22, color=YELLOW_B).next_to(VGroup(simple, complex_m), UP, buff=0.28)
+        return VGroup(title, arrows, simple, complex_m, missing, penalty)
+
+    def construct(self):
+        tag = self.text_box("The Essential Powers of the Quantale", width=7.5, color=YELLOW_B, font_size=30)
+        tag.to_edge(UP, buff=0.3)
+        subtitle = Text("How AGI weighs, examines, and evaluates thoughts", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.12)
+
+        comp = self._sequence_power().scale(0.9).move_to(LEFT * 3.45 + UP * 0.95)
+        uncert = self._uncertainty_power().scale(0.9).move_to(RIGHT * 3.45 + UP * 0.95)
+        residual = self._residual_power().scale(0.88).move_to(UP * -0.75)
+
+        residual_formula = self.formula_box("a ⊘ b = ⋁ { c ∈ Q | b ⊗ c ≤ a }", width=6.4, color=ORANGE, font_size=22)
+        residual_formula.to_edge(DOWN, buff=0.55)
+        residual_note = self.text_box("Residual: missing step + complexity penalty", width=5.7, color=GRAY_A, font_size=16, padding=0.13)
+        residual_note.next_to(residual_formula, UP, buff=0.12)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(comp, shift=UP * 0.08), FadeIn(uncert, shift=UP * 0.08), run_time=0.9)
+        self.play(FadeIn(residual, shift=UP * 0.08), run_time=0.8)
+        self.play(FadeIn(residual_note, shift=UP * 0.06), FadeIn(residual_formula), run_time=0.8)
+        self.next_slide()
+
+
+class Phase1PLNBase(HyperonPhase1RefinedBase):
+    def formula_box(
+        self,
+        text: str,
+        width: float,
+        color=WHITE,
+        font_size: int = 22,
+        padding: float = 0.18,
+        fill_opacity: float = 0.2,
+    ) -> VGroup:
+        label = Text(text, font_size=font_size, color=color, font="Noto Sans Mono", disable_ligatures=True, line_spacing=1.05)
+        self._fit(label, width - 2 * padding, min_size=10)
+        box = RoundedRectangle(
+            corner_radius=0.08,
+            width=width,
+            height=label.height + 2 * padding,
+            stroke_color=color,
+            stroke_width=2,
+            fill_color=BLACK,
+            fill_opacity=fill_opacity,
+        )
+        label.move_to(box)
+        return VGroup(box, label)
+
+    def tiny_label_box(self, text: str, point, width: float, color=WHITE, font_size: int = 14) -> VGroup:
+        box = RoundedRectangle(
+            corner_radius=0.06,
+            width=width,
+            height=0.42,
+            stroke_color=color,
+            stroke_width=1.7,
+            fill_color=BLACK,
+            fill_opacity=0.32,
+        ).move_to(point)
+        label = Text(text, font_size=font_size, color=color)
+        self._fit(label, width - 0.2, min_size=9)
+        label.move_to(box)
+        return VGroup(box, label)
+
+
+class Phase1ProbabilityVsLogicSlide(Phase1PLNBase):
+    def construct(self):
+        tag = self.text_box("Probability vs. Logic", width=5.1, color=YELLOW_B, font_size=31)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Why AGI abandons absolute certainty", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        divider = Line(UP * 1.8, DOWN * 2.75, color=GRAY_D, stroke_width=1.6)
+        left_title = Text("Classical Logic", font_size=22, color=RED_B).move_to(LEFT * 3.35 + UP * 1.65)
+        right_title = Text("Probabilistic Logic", font_size=22, color=GREEN_B).move_to(RIGHT * 3.25 + UP * 1.65)
+
+        start = self.tiny_label_box("Fact", LEFT * 4.15 + UP * 0.82, 1.3, BLUE_B)
+        test = self.tiny_label_box("Rule", LEFT * 3.2 + UP * 0.05, 1.3, YELLOW_B)
+        true_box = self.tiny_label_box("True / 1", LEFT * 4.15 + DOWN * 0.8, 1.55, GREEN_B)
+        false_box = self.tiny_label_box("False / 0", LEFT * 2.2 + DOWN * 0.8, 1.55, RED_B)
+        rigid_edges = VGroup(
+            Arrow(start.get_bottom(), test.get_top(), buff=0.05, color=WHITE, stroke_width=3),
+            Arrow(test.get_bottom(), true_box.get_top(), buff=0.05, color=GREEN_B, stroke_width=3),
+            Arrow(test.get_bottom(), false_box.get_top(), buff=0.05, color=RED_B, stroke_width=3),
+        )
+        exception = self.tiny_label_box("exception", LEFT * 1.55 + UP * 0.15, 1.65, ORANGE, font_size=13)
+        exception_arrow = Arrow(exception.get_right(), test.get_left(), buff=0.08, color=ORANGE, stroke_width=3)
+        red_x = VGroup(
+            Line(LEFT * 3.75 + DOWN * 0.25, LEFT * 2.65 + DOWN * 1.35, color=RED_B, stroke_width=7),
+            Line(LEFT * 2.65 + DOWN * 0.25, LEFT * 3.75 + DOWN * 1.35, color=RED_B, stroke_width=7),
+        )
+
+        points = [
+            RIGHT * 2.05 + UP * 0.9,
+            RIGHT * 3.35 + UP * 1.05,
+            RIGHT * 4.45 + UP * 0.4,
+            RIGHT * 2.45 + DOWN * 0.45,
+            RIGHT * 3.65 + DOWN * 0.55,
+            RIGHT * 4.75 + DOWN * 1.15,
+            RIGHT * 2.95 + DOWN * 1.35,
+        ]
+        edges = VGroup()
+        edge_specs = [(0, 1, 4.5), (1, 2, 2.0), (0, 3, 2.8), (3, 4, 5.6), (4, 2, 1.8), (4, 5, 4.2), (3, 6, 2.2), (6, 5, 3.4)]
+        for i, j, width in edge_specs:
+            edges.add(Line(points[i], points[j], color=GREEN_B, stroke_width=width, stroke_opacity=0.62))
+        nodes = VGroup()
+        for idx, p in enumerate(points):
+            color = [GREEN_B, BLUE_B, YELLOW_B, TEAL_B, GREEN_B, ORANGE, BLUE_B][idx]
+            nodes.add(Dot(p, radius=0.09, color=color))
+        flow = VGroup(*[edge.copy().set_stroke(color=YELLOW_B, width=edge.stroke_width + 2.5, opacity=0.75) for edge in edges[:4]])
+
+        left_panel = self.bullet_panel(
+            "Boolean fails",
+            [
+                "Only True or False",
+                "Contradictions break it",
+            ],
+            width=3.85,
+            title_color=RED_B,
+        ).to_edge(DOWN, buff=0.25).shift(LEFT * 4.25)
+        middle_panel = self.bullet_panel(
+            "Probability fails",
+            [
+                "Long chains dilute math",
+                "Deep reasoning stalls",
+            ],
+            width=3.85,
+            title_color=ORANGE,
+        ).to_edge(DOWN, buff=0.25)
+        right_panel = self.bullet_panel(
+            "PLN solution",
+            [
+                "Keeps logical steps",
+                "Tracks confidence bounds",
+            ],
+            width=3.85,
+            title_color=GREEN_B,
+        ).to_edge(DOWN, buff=0.25).shift(RIGHT * 4.25)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(Create(divider), FadeIn(left_title), FadeIn(right_title), run_time=0.45)
+        self.play(FadeIn(VGroup(start, test, true_box, false_box)), Create(rigid_edges), run_time=0.8)
+        self.play(FadeIn(exception), GrowArrow(exception_arrow), run_time=0.5)
+        self.play(FadeIn(red_x, scale=0.8), Flash(test.get_center(), color=RED_B), run_time=0.45)
+        self.play(Create(edges, lag_ratio=0.05), FadeIn(nodes, lag_ratio=0.08), run_time=0.9)
+        self.play(LaggedStart(*[ShowPassingFlash(f, time_width=0.45) for f in flow], lag_ratio=0.15), run_time=1.1)
+        self.play(
+            FadeIn(left_panel, shift=UP * 0.08),
+            FadeIn(middle_panel, shift=UP * 0.08),
+            FadeIn(right_panel, shift=UP * 0.08),
+            run_time=0.8,
+        )
+        self.next_slide()
+
+
+class Phase1SimpleTruthValueSlide(Phase1PLNBase):
+    def construct(self):
+        tag = self.text_box("The Simple Truth Value (STV)", width=6.4, color=BLUE_B, font_size=31)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Escaping the ambiguity of single-number probabilities", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        origin = LEFT * 3.55 + DOWN * 1.65
+        x_axis = Arrow(origin, origin + RIGHT * 4.2, buff=0, color=GRAY_A, stroke_width=3, max_tip_length_to_length_ratio=0.04)
+        y_axis = Arrow(origin, origin + UP * 3.25, buff=0, color=GRAY_A, stroke_width=3, max_tip_length_to_length_ratio=0.05)
+        x_label = Text("Strength (s)", font_size=17, color=GRAY_A).next_to(x_axis, DOWN, buff=0.18)
+        y_label = Text("Confidence (c)", font_size=17, color=GRAY_A).rotate(PI / 2).next_to(y_axis, LEFT, buff=0.18)
+        ticks = VGroup()
+        for i in range(6):
+            x = origin + RIGHT * (i * 0.8)
+            ticks.add(Line(x + DOWN * 0.06, x + UP * 0.06, color=GRAY_B, stroke_width=1.2))
+        for i in range(5):
+            y = origin + UP * (i * 0.75)
+            ticks.add(Line(y + LEFT * 0.06, y + RIGHT * 0.06, color=GRAY_B, stroke_width=1.2))
+        mid_v = DashedLine(origin + RIGHT * 2.0, origin + RIGHT * 2.0 + UP * 3.0, dash_length=0.08, color=GRAY_D)
+        mid_h = DashedLine(origin + UP * 1.5, origin + RIGHT * 4.0 + UP * 1.5, dash_length=0.08, color=GRAY_D)
+
+        quadrants = VGroup(
+            Text("Looks False\nNeeds Data", font_size=14, color=ORANGE, line_spacing=0.9).move_to(origin + RIGHT * 1.0 + UP * 0.72),
+            Text("Looks True\nNeeds Data", font_size=14, color=YELLOW_B, line_spacing=0.9).move_to(origin + RIGHT * 3.05 + UP * 0.72),
+            Text("Proven False", font_size=15, color=RED_B).move_to(origin + RIGHT * 1.0 + UP * 2.25),
+            Text("Proven True", font_size=15, color=GREEN_B).move_to(origin + RIGHT * 3.05 + UP * 2.25),
+        )
+        examples = VGroup(
+            Dot(origin + RIGHT * 3.25 + UP * 2.42, radius=0.08, color=GREEN_B),
+            Dot(origin + RIGHT * 0.7 + UP * 2.35, radius=0.08, color=RED_B),
+            Dot(origin + RIGHT * 3.3 + UP * 0.78, radius=0.08, color=YELLOW_B),
+            Dot(origin + RIGHT * 0.85 + UP * 0.68, radius=0.08, color=ORANGE),
+        )
+
+        problem = self.bullet_panel(
+            "Why P(x)=0.5 is ambiguous",
+            [
+                "Could mean massive conflicting evidence",
+                "Could mean no evidence at all",
+                "One number cannot separate randomness from ignorance",
+            ],
+            width=5.95,
+            title_color=RED_B,
+        ).to_edge(RIGHT, buff=0.25).shift(UP * 0.82)
+        solution = self.bullet_panel(
+            "PLN truth vector: (s, c)",
+            [
+                "Strength s = how often it was true",
+                "Confidence c = how much evidence supports s",
+            ],
+            width=5.95,
+            title_color=BLUE_B,
+        ).to_edge(RIGHT, buff=0.25).shift(DOWN * 1.4)
+        vector = self.formula_box("(s, c)", width=2.0, color=YELLOW_B, font_size=27).move_to(RIGHT * 3.1 + DOWN * 0.08)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(GrowArrow(x_axis), GrowArrow(y_axis), FadeIn(VGroup(x_label, y_label, ticks)), run_time=0.8)
+        self.play(Create(mid_v), Create(mid_h), FadeIn(quadrants, lag_ratio=0.08), run_time=0.8)
+        self.play(FadeIn(examples, lag_ratio=0.12), Flash(examples[0].get_center(), color=GREEN_B), run_time=0.7)
+        self.play(FadeIn(problem, shift=LEFT * 0.08), run_time=0.75)
+        self.play(FadeIn(vector, scale=1.05), FadeIn(solution, shift=LEFT * 0.08), run_time=0.85)
+        self.next_slide()
+
+
+class Phase1PLNTruthMathSlide(Phase1PLNBase):
+    def construct(self):
+        tag = self.text_box("The Mathematics of PLN Truth Values", width=8.0, color=GREEN_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Calculating belief from raw observation", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        dots = VGroup()
+        for i in range(24):
+            row = i // 8
+            col = i % 8
+            point = LEFT * 4.8 + UP * (0.95 - row * 0.34) + RIGHT * (col * 0.28)
+            color = GREEN_B if i in {0, 1, 2, 4, 5, 8, 9, 11, 13, 16, 18, 20, 22, 23} else GRAY_B
+            dots.add(Dot(point, radius=0.045, color=color))
+        raw_reference = dots.copy().set_opacity(0.22)
+        raw_label = Text("Raw\nevidence", font_size=18, color=GRAY_A, line_spacing=0.82).next_to(raw_reference, LEFT, buff=0.26)
+
+        strength_engine = self.text_box("Strength\nEngine", width=2.2, color=GREEN_B, font_size=19, padding=0.22)
+        confidence_engine = self.text_box("Confidence\nEngine", width=2.4, color=BLUE_B, font_size=19, padding=0.22)
+        strength_engine.move_to(LEFT * 0.65 + UP * 0.72)
+        confidence_engine.move_to(LEFT * 0.65 + DOWN * 0.72)
+        funnel_s = Polygon(LEFT * 3.15 + UP * 1.25, LEFT * 2.0 + UP * 1.0, strength_engine.get_left() + LEFT * 0.05, strength_engine.get_left() + DOWN * 0.2, color=GREEN_B)
+        funnel_s.set_fill(GREEN_E, opacity=0.12).set_stroke(GREEN_B, width=2)
+        funnel_c = Polygon(LEFT * 3.15 + DOWN * 1.05, LEFT * 2.0 + DOWN * 0.9, confidence_engine.get_left() + LEFT * 0.05, confidence_engine.get_left() + UP * 0.2, color=BLUE_B)
+        funnel_c.set_fill(BLUE_E, opacity=0.12).set_stroke(BLUE_B, width=2)
+
+        s_formula = self.formula_box("s = n+ / n", width=2.65, color=GREEN_B, font_size=22)
+        c_formula = self.formula_box("c = n / (n + k)", width=3.1, color=BLUE_B, font_size=20)
+        s_formula.move_to(RIGHT * 2.2 + UP * 0.82)
+        c_formula.move_to(RIGHT * 2.2 + DOWN * 0.72)
+        output = self.formula_box("(s, c)", width=2.1, color=YELLOW_B, font_size=26).move_to(RIGHT * 4.75)
+        out_arrows = VGroup(
+            Arrow(strength_engine.get_right(), s_formula.get_left(), buff=0.1, color=GREEN_B, stroke_width=3),
+            Arrow(confidence_engine.get_right(), c_formula.get_left(), buff=0.1, color=BLUE_B, stroke_width=3),
+            Arrow(s_formula.get_right(), output.get_left() + UP * 0.12, buff=0.1, color=YELLOW_B, stroke_width=3),
+            Arrow(c_formula.get_right(), output.get_left() + DOWN * 0.12, buff=0.1, color=YELLOW_B, stroke_width=3),
+        )
+
+        definitions = self.bullet_panel(
+            "Variables",
+            [
+                "n+ = positive observations",
+                "n = total observations",
+                "k = lookahead / conservatism parameter",
+            ],
+            width=11.2,
+            title_color=YELLOW_B,
+        ).to_edge(DOWN, buff=0.28)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(raw_label), FadeIn(raw_reference, lag_ratio=0.025), FadeIn(dots, lag_ratio=0.025), run_time=0.8)
+        self.play(Create(funnel_s), Create(funnel_c), FadeIn(strength_engine), FadeIn(confidence_engine), run_time=0.75)
+        self.play(
+            LaggedStart(*[dot.animate.move_to(strength_engine.get_center()).set_opacity(0.35) for dot in dots[:12]], lag_ratio=0.025),
+            run_time=0.75,
+        )
+        self.play(FadeIn(s_formula), GrowArrow(out_arrows[0]), run_time=0.55)
+        self.play(
+            LaggedStart(*[dot.animate.move_to(confidence_engine.get_center()).set_opacity(0.35) for dot in dots[12:]], lag_ratio=0.025),
+            run_time=0.75,
+        )
+        self.play(FadeIn(c_formula), GrowArrow(out_arrows[1]), run_time=0.55)
+        self.play(FadeIn(output, scale=1.05), GrowArrow(out_arrows[2]), GrowArrow(out_arrows[3]), FadeIn(definitions, shift=UP * 0.08), run_time=0.85)
+        self.next_slide()
+
+
+class Phase1ExpectedTruthDecisionSlide(Phase1PLNBase):
+    def construct(self):
+        tag = self.text_box("Decision Making Under Uncertainty", width=7.5, color=YELLOW_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Calculating the Expected Truth Value E", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        prior = self.text_box("Prior\ns0", width=2.2, color=BLUE_B, font_size=21, padding=0.24)
+        learned = self.text_box("Observed\nstrength s", width=2.8, color=GREEN_B, font_size=19, padding=0.24)
+        prior.move_to(LEFT * 4.45 + UP * 0.65)
+        learned.move_to(RIGHT * 4.25 + UP * 0.65)
+        bucket = self.text_box("Decision\nE", width=2.4, color=YELLOW_B, font_size=21, padding=0.24).move_to(DOWN * 1.85)
+
+        slider_track = Line(LEFT * 1.9 + UP * 0.82, RIGHT * 1.9 + UP * 0.82, color=GRAY_A, stroke_width=5)
+        slider_knob = Circle(radius=0.16, color=YELLOW_B, fill_color=YELLOW_B, fill_opacity=0.7).move_to(LEFT * 0.75 + UP * 0.82)
+        slider_label = Text("confidence c", font_size=19, color=YELLOW_B).next_to(slider_track, UP, buff=0.2)
+        low = Text("0", font_size=15, color=GRAY_A).next_to(slider_track.get_start(), DOWN, buff=0.1)
+        high = Text("1", font_size=15, color=GRAY_A).next_to(slider_track.get_end(), DOWN, buff=0.1)
+
+        prior_flow = CubicBezier(prior.get_bottom(), LEFT * 4.3 + DOWN * 0.4, LEFT * 1.1 + DOWN * 0.65, bucket.get_left(), color=BLUE_B)
+        learned_flow = CubicBezier(learned.get_bottom(), RIGHT * 4.1 + DOWN * 0.35, RIGHT * 1.05 + DOWN * 0.62, bucket.get_right(), color=GREEN_B)
+        prior_flow.set_stroke(width=7, opacity=0.55)
+        learned_flow.set_stroke(width=3, opacity=0.42)
+
+        formula = self.formula_box("E = c*s + (1-c)*s0", width=5.5, color=YELLOW_B, font_size=22).move_to(DOWN * 0.42)
+        high_conf = self.text_box("High c: trust observed data", width=4.2, color=GREEN_B, font_size=18, padding=0.18).to_edge(DOWN, buff=0.45).shift(LEFT * 3.0)
+        low_conf = self.text_box("Low c: fall back to prior", width=4.0, color=BLUE_B, font_size=18, padding=0.18).to_edge(DOWN, buff=0.45).shift(RIGHT * 3.0)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(prior), FadeIn(learned), FadeIn(bucket), run_time=0.75)
+        self.play(Create(slider_track), FadeIn(VGroup(slider_knob, slider_label, low, high)), run_time=0.65)
+        self.play(Create(prior_flow), Create(learned_flow), FadeIn(formula), run_time=0.85)
+        self.play(
+            slider_knob.animate.move_to(RIGHT * 1.45 + UP * 0.82),
+            learned_flow.animate.set_stroke(width=8, opacity=0.68),
+            prior_flow.animate.set_stroke(width=2.5, opacity=0.28),
+            FadeIn(high_conf, shift=UP * 0.08),
+            run_time=0.85,
+        )
+        self.play(
+            slider_knob.animate.move_to(LEFT * 1.45 + UP * 0.82),
+            prior_flow.animate.set_stroke(width=8, opacity=0.65),
+            learned_flow.animate.set_stroke(width=2.5, opacity=0.26),
+            FadeIn(low_conf, shift=UP * 0.08),
+            run_time=0.85,
+        )
+        self.next_slide()
+
+
+class Phase1LearningBase(Phase1PLNBase):
+    def causal_node(self, label: str, point, color=WHITE, radius: float = 0.35, font_size: int = 20) -> VGroup:
+        circle = Circle(radius=radius, stroke_color=color, stroke_width=2.2, fill_color=BLACK, fill_opacity=0.35)
+        circle.move_to(point)
+        text = Text(label, font_size=font_size, color=color, line_spacing=0.9)
+        self._fit(text, radius * 1.62, min_size=10)
+        text.move_to(circle)
+        return VGroup(circle, text)
+
+    def mini_card(
+        self,
+        title: str,
+        body: list[str],
+        width: float,
+        color=WHITE,
+        title_size: int = 20,
+        body_size: int = 16,
+    ) -> VGroup:
+        title_t = Text(title, font_size=title_size, color=color)
+        self._fit(title_t, width - 0.45, min_size=11)
+        lines = VGroup()
+        for line in body:
+            t = Text(line, font_size=body_size, color=GRAY_A, line_spacing=0.92)
+            self._fit(t, width - 0.45, min_size=9)
+            lines.add(t)
+        lines.arrange(DOWN, aligned_edge=LEFT, buff=0.08)
+        content = VGroup(title_t, lines).arrange(DOWN, aligned_edge=LEFT, buff=0.16)
+        panel = RoundedRectangle(
+            corner_radius=0.09,
+            width=width,
+            height=content.height + 0.36,
+            stroke_color=color,
+            stroke_width=1.7,
+            fill_color=BLACK,
+            fill_opacity=0.24,
+        )
+        content.move_to(panel).shift(LEFT * 0.03)
+        return VGroup(panel, content)
+
+    def small_plot(self, origin, width: float, height: float, title: str, color=WHITE) -> VGroup:
+        x_axis = Arrow(origin, origin + RIGHT * width, buff=0, color=GRAY_B, stroke_width=2.4, max_tip_length_to_length_ratio=0.05)
+        y_axis = Arrow(origin, origin + UP * height, buff=0, color=GRAY_B, stroke_width=2.4, max_tip_length_to_length_ratio=0.06)
+        title_t = Text(title, font_size=16, color=color)
+        self._fit(title_t, width + 0.3, min_size=10)
+        title_t.next_to(VGroup(x_axis, y_axis), UP, buff=0.14)
+        y_label = Text("Recovery", font_size=12, color=GRAY_A).rotate(PI / 2).next_to(y_axis, LEFT, buff=0.1)
+        x_label = Text("Treatment", font_size=12, color=GRAY_A).next_to(x_axis, DOWN, buff=0.1)
+        return VGroup(x_axis, y_axis, title_t, y_label, x_label)
+
+
+class Phase1ActiveInferenceLoopSlide(Phase1LearningBase):
+    def construct(self):
+        tag = self.text_box("Learning Paradigms: Active Inference", width=7.6, color=BLUE_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Biological learning with top-down predictions", font_size=20, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        high = self.text_box("High-level\nbeliefs mu", width=2.5, color=BLUE_B, font_size=20, padding=0.2).move_to(LEFT * 4.0 + UP * 0.95)
+        model = self.text_box("Generative\nmodel", width=2.45, color=TEAL_B, font_size=20, padding=0.2).move_to(LEFT * 4.0 + DOWN * 0.15)
+        sensory = self.text_box("Sensory\nlayer", width=2.45, color=GREEN_B, font_size=20, padding=0.2).move_to(LEFT * 4.0 + DOWN * 1.25)
+        subtract = Circle(radius=0.28, color=YELLOW_B, fill_color=BLACK, fill_opacity=0.35).move_to(LEFT * 1.95 + DOWN * 1.25)
+        minus = Text("-", font_size=28, color=YELLOW_B, font="Noto Sans Mono").move_to(subtract)
+        sensor_in = Arrow(LEFT * 1.0 + DOWN * 2.15, subtract.get_bottom(), buff=0.06, color=GREEN_B, stroke_width=4)
+        sensor_label = Text("Sensory data x", font_size=16, color=GREEN_B).next_to(sensor_in, DOWN, buff=0.08)
+        down_1 = Arrow(high.get_bottom(), model.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
+        down_2 = Arrow(model.get_bottom(), sensory.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
+        pred_label = Text("Predictions\nf(mu)", font_size=14, color=BLUE_B, line_spacing=0.84).move_to(LEFT * 5.45 + UP * 0.1)
+        compare_arrow = Arrow(sensory.get_right(), subtract.get_left(), buff=0.08, color=YELLOW_B, stroke_width=4)
+        error_path = VGroup(
+            Arrow(subtract.get_top(), LEFT * 1.95 + UP * 0.4, buff=0.04, color=ORANGE, stroke_width=4),
+            Arrow(LEFT * 1.95 + UP * 0.4, high.get_right(), buff=0.08, color=ORANGE, stroke_width=4),
+        )
+        error_label = Text("Prediction error e", font_size=16, color=ORANGE).next_to(error_path, RIGHT, buff=0.12)
+
+        passive = self.mini_card(
+            "Traditional AI: passive",
+            ["data in -> conclusion out", "Every example travels upward"],
+            width=5.2,
+            color=RED_B,
+            title_size=21,
+        )
+        active = self.mini_card(
+            "AGI learning: active",
+            ["belief predicts sensor input", "Only error moves upward"],
+            width=5.2,
+            color=GREEN_B,
+            title_size=21,
+        )
+        VGroup(passive, active).arrange(DOWN, buff=0.22).move_to(RIGHT * 3.1 + UP * 0.32)
+
+        loop_steps = VGroup(
+            self.text_box("1 Predict", width=1.85, color=BLUE_B, font_size=18, padding=0.14),
+            self.text_box("2 Compare", width=1.95, color=YELLOW_B, font_size=18, padding=0.14),
+            self.text_box("3 Update", width=1.85, color=ORANGE, font_size=18, padding=0.14),
+        ).arrange(RIGHT, buff=0.18).move_to(RIGHT * 3.1 + DOWN * 1.75)
+        step_arrows = VGroup(
+            Arrow(loop_steps[0].get_right(), loop_steps[1].get_left(), buff=0.06, color=GRAY_B, stroke_width=2.8),
+            Arrow(loop_steps[1].get_right(), loop_steps[2].get_left(), buff=0.06, color=GRAY_B, stroke_width=2.8),
+        )
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(VGroup(high, model, sensory)), Create(VGroup(down_1, down_2)), FadeIn(pred_label), run_time=0.8)
+        self.play(FadeIn(VGroup(subtract, minus)), GrowArrow(compare_arrow), GrowArrow(sensor_in), FadeIn(sensor_label), run_time=0.75)
+        self.play(Create(error_path), FadeIn(error_label), Flash(subtract.get_center(), color=YELLOW_B), run_time=0.85)
+        self.play(FadeIn(passive, shift=LEFT * 0.08), FadeIn(active, shift=LEFT * 0.08), run_time=0.75)
+        self.play(FadeIn(loop_steps, lag_ratio=0.12), Create(step_arrows), run_time=0.7)
+        self.next_slide()
+
+
+class Phase1PredictiveCodingMathSlide(Phase1LearningBase):
+    def construct(self):
+        tag = self.text_box("The Mathematics of Predictive Coding", width=7.3, color=YELLOW_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Minimizing surprise, also called free energy", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        error_node = Circle(radius=0.42, color=YELLOW_B, fill_color=BLACK, fill_opacity=0.34).move_to(LEFT * 3.8 + UP * 0.3)
+        error_text = Text("-", font_size=36, color=YELLOW_B).move_to(error_node)
+        sensory = self.formula_box("x", width=1.0, color=GREEN_B, font_size=25).move_to(LEFT * 5.55 + UP * 0.3)
+        prediction = self.formula_box("f(mu)", width=1.7, color=BLUE_B, font_size=23).move_to(LEFT * 3.8 + UP * 1.55)
+        error_out = self.formula_box("e", width=1.0, color=ORANGE, font_size=25).move_to(LEFT * 2.2 + UP * 0.3)
+        in_arrows = VGroup(
+            Arrow(sensory.get_right(), error_node.get_left(), buff=0.08, color=GREEN_B, stroke_width=4),
+            Arrow(prediction.get_bottom(), error_node.get_top(), buff=0.08, color=BLUE_B, stroke_width=4),
+            Arrow(error_node.get_right(), error_out.get_left(), buff=0.08, color=ORANGE, stroke_width=4),
+        )
+        variables = self.mini_card(
+            "Variables",
+            ["x = sensory data", "mu = belief state", "f(mu) = predicted data"],
+            width=4.3,
+            color=GRAY_B,
+            title_size=20,
+            body_size=16,
+        ).move_to(LEFT * 4.0 + DOWN * 1.45)
+
+        origin = RIGHT * 1.35 + DOWN * 1.75
+        x_axis = Arrow(origin, origin + RIGHT * 4.2, buff=0, color=GRAY_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.04)
+        y_axis = Arrow(origin, origin + UP * 2.65, buff=0, color=GRAY_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.05)
+        curve_points = []
+        for i in range(22):
+            x = i / 21
+            y = (1.0 - x) ** 2 * 2.0 + 0.25
+            curve_points.append(origin + RIGHT * (x * 3.75 + 0.18) + UP * y)
+        curve = VMobject(color=ORANGE, stroke_width=4)
+        curve.set_points_smoothly(curve_points)
+        desc = Arrow(curve_points[5], curve_points[15], buff=0.02, color=YELLOW_B, stroke_width=4)
+        graph_label = Text("Surprise e^2", font_size=16, color=ORANGE).rotate(PI / 2).next_to(y_axis, LEFT, buff=0.12).shift(UP * 0.35)
+        time_label = Text("time t", font_size=16, color=GRAY_A).next_to(x_axis, DOWN, buff=0.12)
+        gd_label = Text("gradient descent", font_size=16, color=YELLOW_B).next_to(desc, UP, buff=0.08)
+
+        error_formula = self.formula_box("e = x - f(mu)", width=3.1, color=ORANGE, font_size=23).move_to(RIGHT * 2.9 + UP * 1.55)
+        learn_formula = self.formula_box("dmu/dt ∝ - ∂(e^2)/∂mu", width=4.4, color=YELLOW_B, font_size=21).move_to(RIGHT * 2.9 + UP * 0.72)
+        note = self.text_box("Learning updates only where prediction failed.", width=5.55, color=GRAY_A, font_size=17, padding=0.15).to_edge(DOWN, buff=0.28).shift(RIGHT * 2.65)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(VGroup(sensory, prediction, error_node, error_text, error_out)), Create(in_arrows), run_time=0.85)
+        self.play(FadeIn(variables, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(error_formula), FadeIn(learn_formula, shift=UP * 0.06), run_time=0.75)
+        self.play(Create(VGroup(x_axis, y_axis)), FadeIn(VGroup(graph_label, time_label)), Create(curve), run_time=0.8)
+        self.play(GrowArrow(desc), FadeIn(gd_label), FadeIn(note, shift=UP * 0.08), run_time=0.8)
+        self.next_slide()
+
+
+class Phase1CausalCodingSimpsonSlide(Phase1LearningBase):
+    def construct(self):
+        tag = self.text_box("Causal Coding: Breaking Correlations", width=7.4, color=RED_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Simpson's Paradox shows why pattern matching is not enough", font_size=20, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        agg_origin = LEFT * 5.7 + DOWN * 0.45
+        agg_plot = self.small_plot(agg_origin, 2.65, 2.05, "Aggregated view", color=YELLOW_B)
+        agg_line = Line(agg_origin + RIGHT * 0.45 + UP * 0.55, agg_origin + RIGHT * 2.25 + UP * 1.55, color=YELLOW_B, stroke_width=4)
+        agg_dots = VGroup(
+            Dot(agg_origin + RIGHT * 0.55 + UP * 0.65, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 0.9 + UP * 0.75, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 1.95 + UP * 1.35, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 2.25 + UP * 1.58, radius=0.055, color=YELLOW_B),
+        )
+        agg_label = self.text_box("Drug helps?", width=1.85, color=YELLOW_B, font_size=15, padding=0.12).next_to(agg_plot, DOWN, buff=0.12)
+
+        strat_origin = LEFT * 1.45 + DOWN * 0.45
+        strat_plot = self.small_plot(strat_origin, 2.65, 2.05, "Stratified by Z", color=BLUE_B)
+        men_line = Line(strat_origin + RIGHT * 0.45 + UP * 1.65, strat_origin + RIGHT * 2.25 + UP * 1.25, color=BLUE_B, stroke_width=4)
+        women_line = Line(strat_origin + RIGHT * 0.45 + UP * 0.95, strat_origin + RIGHT * 2.25 + UP * 0.55, color=GREEN_B, stroke_width=4)
+        men_label = Text("Men", font_size=13, color=BLUE_B).next_to(men_line, UP, buff=0.04)
+        women_label = Text("Women", font_size=13, color=GREEN_B).next_to(women_line, DOWN, buff=0.04)
+        strat_label = self.text_box("Drug hurts\ninside each group", width=2.3, color=RED_B, font_size=14, padding=0.12).next_to(strat_plot, DOWN, buff=0.12)
+
+        z = self.causal_node("Z\nGender", RIGHT * 4.25 + UP * 0.9, BLUE_B, radius=0.38, font_size=15)
+        x = self.causal_node("X\nTreatment", RIGHT * 3.25 + DOWN * 0.72, YELLOW_B, radius=0.38, font_size=13)
+        y = self.causal_node("Y\nRecovery", RIGHT * 5.35 + DOWN * 0.72, GREEN_B, radius=0.38, font_size=13)
+        z_to_x = Arrow(z.get_bottom(), x.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
+        z_to_y = Arrow(z.get_bottom(), y.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
+        x_to_y = Arrow(x.get_right(), y.get_left(), buff=0.08, color=YELLOW_B, stroke_width=4)
+        backdoor = VGroup(z_to_x.copy().set_color(RED_B).set_stroke(width=7, opacity=0.45), z_to_y.copy().set_color(RED_B).set_stroke(width=7, opacity=0.45))
+        dag_title = Text("The hidden confounder", font_size=18, color=RED_B).next_to(z, UP, buff=0.2)
+        dag_note = self.mini_card(
+            "Hyperon stores causes, not just correlations",
+            ["A -> B means A physically changes B", "The DAG tells PLN which paths are valid"],
+            width=3.8,
+            color=GREEN_B,
+            title_size=18,
+            body_size=14,
+        ).move_to(RIGHT * 4.35 + DOWN * 1.95)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(Create(agg_plot), Create(agg_line), FadeIn(agg_dots), FadeIn(agg_label), run_time=0.8)
+        self.play(Create(strat_plot), Create(VGroup(men_line, women_line)), FadeIn(VGroup(men_label, women_label, strat_label)), run_time=0.9)
+        self.play(FadeIn(VGroup(z, x, y, dag_title)), GrowArrow(z_to_x), GrowArrow(z_to_y), GrowArrow(x_to_y), run_time=0.85)
+        self.play(FadeIn(backdoor), Flash(z.get_center(), color=RED_B), FadeIn(dag_note, shift=LEFT * 0.08), run_time=0.85)
+        self.next_slide()
+
+
+class Phase1DoCalculusSurgerySlide(Phase1LearningBase):
+    def construct(self):
+        tag = self.text_box("Causal Coding: The do-Calculus", width=6.7, color=YELLOW_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Mathematically simulating physical interventions", font_size=21, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        left_title = Text("Observe: P(Y | X)", font_size=21, color=RED_B).move_to(LEFT * 3.7 + UP * 1.55)
+        right_title = Text("Intervene: P(Y | do(X))", font_size=21, color=GREEN_B).move_to(RIGHT * 3.25 + UP * 1.55)
+        divider = Line(UP * 1.75, DOWN * 1.8, color=GRAY_D, stroke_width=1.6)
+
+        z_l = self.causal_node("Z", LEFT * 3.7 + UP * 0.85, BLUE_B)
+        x_l = self.causal_node("X", LEFT * 4.7 + DOWN * 0.55, YELLOW_B)
+        y_l = self.causal_node("Y", LEFT * 2.75 + DOWN * 0.55, GREEN_B)
+        lx = Arrow(z_l.get_bottom(), x_l.get_top(), buff=0.08, color=RED_B, stroke_width=5)
+        ly = Arrow(z_l.get_bottom(), y_l.get_top(), buff=0.08, color=RED_B, stroke_width=5)
+        xy_l = Arrow(x_l.get_right(), y_l.get_left(), buff=0.08, color=YELLOW_B, stroke_width=4)
+        backdoor_label = Text("backdoor path", font_size=15, color=RED_B).next_to(VGroup(lx, ly), DOWN, buff=0.05)
+
+        z_r = self.causal_node("Z", RIGHT * 3.25 + UP * 0.85, BLUE_B)
+        x_r = self.causal_node("X", RIGHT * 2.25 + DOWN * 0.55, YELLOW_B)
+        y_r = self.causal_node("Y", RIGHT * 4.2 + DOWN * 0.55, GREEN_B)
+        cut_arrow = DashedLine(z_r.get_bottom(), x_r.get_top(), dash_length=0.08, color=GRAY_D, stroke_width=3)
+        ry = Arrow(z_r.get_bottom(), y_r.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
+        xy_r = Arrow(x_r.get_right(), y_r.get_left(), buff=0.08, color=YELLOW_B, stroke_width=4)
+        cut_x = VGroup(
+            Line(cut_arrow.get_center() + LEFT * 0.2 + UP * 0.2, cut_arrow.get_center() + RIGHT * 0.2 + DOWN * 0.2, color=RED_B, stroke_width=6),
+            Line(cut_arrow.get_center() + LEFT * 0.2 + DOWN * 0.2, cut_arrow.get_center() + RIGHT * 0.2 + UP * 0.2, color=RED_B, stroke_width=6),
+        )
+        do_label = self.text_box("do(X)", width=1.45, color=YELLOW_B, font_size=17, padding=0.12).next_to(x_r, DOWN, buff=0.18)
+        surgery_note = Text("incoming arrows to X are deleted", font_size=15, color=GREEN_B).next_to(cut_x, RIGHT, buff=0.12)
+
+        observe_card = self.mini_card(
+            "Observation",
+            ["X happens naturally", "Z may explain both X and Y"],
+            width=4.0,
+            color=RED_B,
+            title_size=18,
+            body_size=14,
+        ).move_to(LEFT * 3.65 + DOWN * 1.9)
+        intervene_card = self.mini_card(
+            "Intervention",
+            ["The AGI forces X", "Confounding backdoors are severed"],
+            width=4.05,
+            color=GREEN_B,
+            title_size=18,
+            body_size=14,
+        ).move_to(RIGHT * 3.4 + DOWN * 1.9)
+
+        rules = VGroup(
+            self.mini_card("Rule 1", ["ignore irrelevant W", "P(Y|do(X),Z,W)=P(Y|do(X),Z)"], 3.9, BLUE_B, 15, 11),
+            self.mini_card("Rule 2", ["swap action with observation", "P(Y|do(X),Z)=P(Y|X,Z)"], 3.9, YELLOW_B, 15, 11),
+            self.mini_card("Rule 3", ["delete irrelevant action", "P(Y|do(X))=P(Y)"], 3.9, GREEN_B, 15, 11),
+        ).arrange(RIGHT, buff=0.2).to_edge(DOWN, buff=0.18)
+        graph_group = VGroup(left_title, right_title, divider, z_l, x_l, y_l, lx, ly, xy_l, z_r, x_r, y_r, cut_arrow, ry, xy_r, cut_x, do_label, backdoor_label, surgery_note)
+        graph_group.shift(UP * 0.32)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(Create(divider), FadeIn(VGroup(left_title, right_title)), run_time=0.45)
+        self.play(FadeIn(VGroup(z_l, x_l, y_l)), GrowArrow(lx), GrowArrow(ly), GrowArrow(xy_l), FadeIn(backdoor_label), run_time=0.85)
+        self.play(FadeIn(VGroup(z_r, x_r, y_r)), Create(cut_arrow), GrowArrow(ry), GrowArrow(xy_r), FadeIn(do_label), run_time=0.85)
+        self.play(FadeIn(cut_x, scale=0.8), FadeIn(surgery_note), FadeIn(observe_card), FadeIn(intervene_card), run_time=0.75)
+        self.play(FadeIn(rules, shift=UP * 0.08), run_time=0.75)
+        self.next_slide()
+
+
+class Phase1BackdoorAdjustmentSlide(Phase1LearningBase):
+    def construct(self):
+        tag = self.text_box("Calculating do(X) from Passive Data", width=7.4, color=GREEN_B, font_size=30)
+        tag.to_edge(UP, buff=0.32)
+        subtitle = Text("Backdoor adjustment: eliminating confounders mathematically", font_size=20, color=GRAY_A)
+        subtitle.next_to(tag, DOWN, buff=0.14)
+
+        z = self.causal_node("Z\nGender", LEFT * 4.65 + UP * 1.0, BLUE_B, radius=0.35, font_size=14)
+        x = self.causal_node("X\nTreatment", LEFT * 5.35 + UP * 0.05, YELLOW_B, radius=0.35, font_size=13)
+        y = self.causal_node("Y\nRecovery", LEFT * 3.8 + UP * 0.05, GREEN_B, radius=0.35, font_size=13)
+        z_x = Arrow(z.get_bottom(), x.get_top(), buff=0.08, color=RED_B, stroke_width=4)
+        z_y = Arrow(z.get_bottom(), y.get_top(), buff=0.08, color=RED_B, stroke_width=4)
+        x_y = Arrow(x.get_right(), y.get_left(), buff=0.08, color=YELLOW_B, stroke_width=3.5)
+        backdoor_label = Text("Backdoor path", font_size=15, color=RED_B).next_to(VGroup(z_x, z_y), LEFT, buff=0.08)
+
+        challenge = self.mini_card(
+            "Challenge",
+            ["Treatment assignment is biased.", "Gender Z affects X and Y."],
+            width=5.0,
+            color=RED_B,
+            title_size=20,
+            body_size=15,
+        ).move_to(RIGHT * 2.2 + UP * 0.7)
+
+        formula = self.formula_box(
+            "P(Y=1 | do(X=1)) = sum_z P(Y=1 | X=1, Z=z) P(Z=z)",
+            width=11.3,
+            color=YELLOW_B,
+            font_size=18,
+        ).move_to(DOWN * 0.82)
+
+        row_y = DOWN * 1.42
+        headers = VGroup(
+            Text("Z subgroup", font_size=16, color=BLUE_B),
+            Text("Recovery if treated", font_size=16, color=GREEN_B),
+            Text("Population weight", font_size=16, color=YELLOW_B),
+            Text("Contribution", font_size=16, color=ORANGE),
+        ).arrange(RIGHT, buff=0.62).move_to(row_y + LEFT * 0.1)
+        men_row = VGroup(
+            Text("Men", font_size=16, color=GRAY_A),
+            Text("0.60", font_size=16, color=GREEN_B),
+            Text("0.50", font_size=16, color=YELLOW_B),
+            Text("0.30", font_size=16, color=ORANGE),
+        ).arrange(RIGHT, buff=1.65).next_to(headers, DOWN, buff=0.22)
+        women_row = VGroup(
+            Text("Women", font_size=16, color=GRAY_A),
+            Text("0.40", font_size=16, color=GREEN_B),
+            Text("0.50", font_size=16, color=YELLOW_B),
+            Text("0.20", font_size=16, color=ORANGE),
+        ).arrange(RIGHT, buff=1.5).next_to(men_row, DOWN, buff=0.16)
+        table = VGroup(headers, men_row, women_row)
+        table_box = RoundedRectangle(
+            corner_radius=0.08,
+            width=9.2,
+            height=1.55,
+            stroke_color=GRAY_B,
+            stroke_width=1.7,
+            fill_color=BLACK,
+            fill_opacity=0.22,
+        ).move_to(table)
+        table_group = VGroup(table_box, table).move_to(DOWN * 1.92 + LEFT * 0.15)
+
+        naive = self.text_box("Naive pooled\nP(Y=1 | X=1) = 0.80", width=3.1, color=RED_B, font_size=15, padding=0.14).to_edge(DOWN, buff=0.25).shift(LEFT * 4.55)
+        adjusted = self.text_box("Adjusted causal\n0.30 + 0.20 = 0.50", width=3.35, color=GREEN_B, font_size=15, padding=0.14).to_edge(DOWN, buff=0.25).shift(RIGHT * 4.35)
+        conclusion_arrow = Arrow(naive.get_right(), adjusted.get_left(), buff=0.15, color=YELLOW_B, stroke_width=4)
+
+        self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
+        self.play(FadeIn(VGroup(z, x, y)), GrowArrow(z_x), GrowArrow(z_y), GrowArrow(x_y), FadeIn(backdoor_label), run_time=0.85)
+        self.play(FadeIn(challenge, shift=LEFT * 0.08), run_time=0.6)
+        self.play(FadeIn(formula, scale=1.02), run_time=0.75)
+        self.play(FadeIn(table_group, shift=UP * 0.08), run_time=0.75)
+        self.play(FadeIn(naive), GrowArrow(conclusion_arrow), FadeIn(adjusted), Flash(adjusted.get_center(), color=GREEN_B), run_time=0.85)
+        self.next_slide()

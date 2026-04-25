@@ -1,0 +1,33 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase3PLNReasoningEngine/dfebc27e128499998022fe2575d88b6b4fe09f473c64ad88329fba5e8c7b749a.mp4",
+      "rev_file": "slides/files/Phase3PLNReasoningEngine/dfebc27e128499998022fe2575d88b6b4fe09f473c64ad88329fba5e8c7b749a_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase3PLNReasoningEngine/9eff62da81a008ab4473babfd61ed97b5b72618ee71ea8743ad09d592ede44a3.mp4",
+      "rev_file": "slides/files/Phase3PLNReasoningEngine/9eff62da81a008ab4473babfd61ed97b5b72618ee71ea8743ad09d592ede44a3_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

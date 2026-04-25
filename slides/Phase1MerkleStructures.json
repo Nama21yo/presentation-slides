@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MerkleStructures/56d12056906a7d4edd5c6c90274caf7e1c72bcbe00f981130b65ec9b91c91534.mp4",
+      "rev_file": "slides/files/Phase1MerkleStructures/56d12056906a7d4edd5c6c90274caf7e1c72bcbe00f981130b65ec9b91c91534_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MerkleStructures/2e89bf83fed88b3c4effa40be673d07fe8fb14860a10055f230118b37016c3d1.mp4",
+      "rev_file": "slides/files/Phase1MerkleStructures/2e89bf83fed88b3c4effa40be673d07fe8fb14860a10055f230118b37016c3d1_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1MerkleStructures/903d909770be226fa27ad4fd62879abed40f6b65c2034f1d8bd27c891f2c49bb.mp4",
+      "rev_file": "slides/files/Phase1MerkleStructures/903d909770be226fa27ad4fd62879abed40f6b65c2034f1d8bd27c891f2c49bb_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

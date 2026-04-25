@@ -1,0 +1,69 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1SetsRelationsGraphs/5be14b5af4b1b587f98e51950a441cfb6dbe9945858257130ad4b7c932f23d60.mp4",
+      "rev_file": "slides/files/Phase1SetsRelationsGraphs/5be14b5af4b1b587f98e51950a441cfb6dbe9945858257130ad4b7c932f23d60_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1SetsRelationsGraphs/8555042709f4d362827dc6a015d9ccc90db1079b261ac7cdc9392df03650dad2.mp4",
+      "rev_file": "slides/files/Phase1SetsRelationsGraphs/8555042709f4d362827dc6a015d9ccc90db1079b261ac7cdc9392df03650dad2_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1SetsRelationsGraphs/b3e4461ae43616d824a8dea888036454d5535ccf6511c84b12a950853a84bc8f.mp4",
+      "rev_file": "slides/files/Phase1SetsRelationsGraphs/b3e4461ae43616d824a8dea888036454d5535ccf6511c84b12a950853a84bc8f_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1SetsRelationsGraphs/7fffe364217a45a7e1a7dd1796c42669e15e3afb7c6e23076e27d4aaf5391d06.mp4",
+      "rev_file": "slides/files/Phase1SetsRelationsGraphs/7fffe364217a45a7e1a7dd1796c42669e15e3afb7c6e23076e27d4aaf5391d06_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1SetsRelationsGraphs/da94bd3640efceac1075f2a79e320ae537809a8f504d1dd5720a9b7e2e0ba21e.mp4",
+      "rev_file": "slides/files/Phase1SetsRelationsGraphs/da94bd3640efceac1075f2a79e320ae537809a8f504d1dd5720a9b7e2e0ba21e_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

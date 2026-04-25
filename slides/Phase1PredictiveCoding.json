@@ -1,0 +1,57 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PredictiveCoding/236501e941e94e9f46e79023f434abf953986043456fafb86fc8c4b91df7ffca.mp4",
+      "rev_file": "slides/files/Phase1PredictiveCoding/236501e941e94e9f46e79023f434abf953986043456fafb86fc8c4b91df7ffca_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PredictiveCoding/718a02eede5602fa2ff25019088e87f6b0e5ceb04dd12ecaf11e21570457efb8.mp4",
+      "rev_file": "slides/files/Phase1PredictiveCoding/718a02eede5602fa2ff25019088e87f6b0e5ceb04dd12ecaf11e21570457efb8_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PredictiveCoding/d5b6c3dc9231eee31493b5c2b3e8d2de15d6f2ae3c202afc1c3c5fdf3e065f19.mp4",
+      "rev_file": "slides/files/Phase1PredictiveCoding/d5b6c3dc9231eee31493b5c2b3e8d2de15d6f2ae3c202afc1c3c5fdf3e065f19_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PredictiveCoding/22d3949fc292a5a40d8ec6ad0d2a0431f21ad8985204a1649415c6e852b24be6.mp4",
+      "rev_file": "slides/files/Phase1PredictiveCoding/22d3949fc292a5a40d8ec6ad0d2a0431f21ad8985204a1649415c6e852b24be6_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

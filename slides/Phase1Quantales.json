@@ -1,0 +1,57 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1Quantales/c5bf208da2d58421df183e8234f5ca1e12ab05b09717be89b35393d98af5e2b7.mp4",
+      "rev_file": "slides/files/Phase1Quantales/c5bf208da2d58421df183e8234f5ca1e12ab05b09717be89b35393d98af5e2b7_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1Quantales/19116a3aee10da8461c69581ae76e3924550b747aa50a2a29c0fc67c0933bc7f.mp4",
+      "rev_file": "slides/files/Phase1Quantales/19116a3aee10da8461c69581ae76e3924550b747aa50a2a29c0fc67c0933bc7f_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1Quantales/a4fab35490691a4644e3cce8d031d4a775adea7e8c0d91b1573e9b2bfbd7cb75.mp4",
+      "rev_file": "slides/files/Phase1Quantales/a4fab35490691a4644e3cce8d031d4a775adea7e8c0d91b1573e9b2bfbd7cb75_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1Quantales/7b9437d69ed5ef5eeaa4eb7a007e271c9ffdd28f278e8c5470502460998e8766.mp4",
+      "rev_file": "slides/files/Phase1Quantales/7b9437d69ed5ef5eeaa4eb7a007e271c9ffdd28f278e8c5470502460998e8766_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}
