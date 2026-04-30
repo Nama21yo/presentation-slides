@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4AlgorithmicChemistry/45d994bc351eeb210a4b49e6be42261be71efe2b16291c50529aef408f9b951c.mp4",
+      "rev_file": "slides/files/Phase4AlgorithmicChemistry/45d994bc351eeb210a4b49e6be42261be71efe2b16291c50529aef408f9b951c_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4AlgorithmicChemistry/f898b4a8db4fb13395c7c2df65275f4f8e6f7b3f6247ce2ff555351e8a6d592e.mp4",
+      "rev_file": "slides/files/Phase4AlgorithmicChemistry/f898b4a8db4fb13395c7c2df65275f4f8e6f7b3f6247ce2ff555351e8a6d592e_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4AlgorithmicChemistry/fd340cec41c0186ace5cfc0d2ac9b3531141cf9332452e66a815950e8ce91124.mp4",
+      "rev_file": "slides/files/Phase4AlgorithmicChemistry/fd340cec41c0186ace5cfc0d2ac9b3531141cf9332452e66a815950e8ce91124_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

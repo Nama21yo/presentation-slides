@@ -46,7 +46,7 @@ def tag(text, color=TEAL_B):
 
 class Phase2AtomspaceSubstrate(Slide):
     def construct(self):
-        hdr = Text("2.1 — Atomspace: Universal Cognitive Substrate", font_size=31, color=BLUE_B)
+        hdr = Text("Atomspace: Universal Cognitive Substrate", font_size=31, color=BLUE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Everything = Atom", color=BLUE_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -93,7 +93,7 @@ class Phase2AtomspaceSubstrate(Slide):
 
 class Phase2MORKEngine(Slide):
     def construct(self):
-        hdr = Text("2.2 — MORK: MeTTa Optimal Reduction Kernel", font_size=30, color=ORANGE)
+        hdr = Text("MORK: MeTTa Optimal Reduction Kernel", font_size=30, color=ORANGE)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("PathMap · Lock-Free · GPU-Ready", color=ORANGE).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -127,16 +127,16 @@ class Phase2MORKEngine(Slide):
                             "Acts as cognitive scheduler — urgent tasks get compute first"],
                            width=10.0, tc=YELLOW_B)
         was_detail.to_edge(DOWN, buff=0.18)
-        self.play(FadeOut(layer_vg[2:]), FadeIn(was_detail, shift=UP * 0.08), run_time=0.7)
+        self.play(FadeOut(layer_vg), FadeIn(was_detail, shift=UP * 0.08), run_time=0.7)
         self.next_slide()
 
         # ShardZipper detail
         self.play(FadeOut(was_detail), run_time=0.4)
         shz_flow = VGroup(
-            label_box("MORK Atomspace", color=ORANGE, font=18, width=3.0).move_to(LEFT * 4.5 + DOWN * 0.5),
-            label_box("Extract shard\n(hash prefix)", color=TEAL_B, font=17, width=2.8).move_to(LEFT * 1.6 + DOWN * 0.5),
-            label_box("GPU Kernel\n(attention / conv)", color=GREEN_B, font=17, width=2.8).move_to(RIGHT * 1.5 + DOWN * 0.5),
-            label_box("Zip back +\nMerkle integrity", color=ORANGE, font=17, width=2.8).move_to(RIGHT * 4.5 + DOWN * 0.5),
+            label_box("MORK\nAtomspace", color=ORANGE, font=16, width=2.35).move_to(LEFT * 5.0 + DOWN * 0.5),
+            label_box("Extract\nshard", color=TEAL_B, font=16, width=2.35).move_to(LEFT * 1.75 + DOWN * 0.5),
+            label_box("GPU\nkernel", color=GREEN_B, font=16, width=2.35).move_to(RIGHT * 1.45 + DOWN * 0.5),
+            label_box("Zip back\nverified", color=ORANGE, font=16, width=2.35).move_to(RIGHT * 4.65 + DOWN * 0.5),
         )
         arrows_shz = VGroup(*[
             Arrow(shz_flow[i].get_right(), shz_flow[i+1].get_left(), buff=0.06, stroke_width=4)
@@ -153,7 +153,7 @@ class Phase2MORKEngine(Slide):
 
 class Phase2MeTTaLanguageStack(Slide):
     def construct(self):
-        hdr = Text("2.3 — MeTTa Language & Execution Stack", font_size=32, color=PURPLE_B)
+        hdr = Text("MeTTa Language & Execution Stack", font_size=32, color=PURPLE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Homoiconic · Multi-backend · Cognitive Code", color=PURPLE_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -208,7 +208,7 @@ class Phase2MeTTaLanguageStack(Slide):
 
 class Phase2SpaceAbstraction(Slide):
     def construct(self):
-        hdr = Text("2.4 — Space Abstraction", font_size=34, color=TEAL_B)
+        hdr = Text("Space Abstraction", font_size=34, color=TEAL_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("One API · Many Backends", color=TEAL_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -249,7 +249,7 @@ class Phase2SpaceAbstraction(Slide):
 
 class Phase2DistributedAtomspace(Slide):
     def construct(self):
-        hdr = Text("2.5 — Distributed Atomspace (DAS)", font_size=34, color=BLUE_B)
+        hdr = Text("Distributed Atomspace (DAS)", font_size=34, color=BLUE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Multi-Node · Sharding · Decentralized", color=BLUE_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -308,7 +308,7 @@ class Phase2DistributedAtomspace(Slide):
 
 class Phase2StateManagement(Slide):
     def construct(self):
-        hdr = Text("2.6 — State Management System (SMS)", font_size=33, color=GREEN_B)
+        hdr = Text("State Management System (SMS)", font_size=33, color=GREEN_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Versioning · Rollback · Provenance", color=GREEN_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)

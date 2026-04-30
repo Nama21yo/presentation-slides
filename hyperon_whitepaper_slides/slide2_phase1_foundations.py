@@ -518,7 +518,7 @@ class HyperonPhase1RefinedBase(Slide):
 
 class Phase1QuestionOnlySlide(HyperonPhase1RefinedBase):
     def construct(self):
-        title = Text("Phase 1 — Mathematical & Representational Foundations", font_size=34, color=BLUE_B)
+        title = Text("Mathematical & Representational Foundations", font_size=34, color=BLUE_B)
         title.to_edge(UP, buff=0.4)
         q = self.text_box("How we represent data to build an AGI system?", width=10.5, font_size=48, padding=0.4)
         q.move_to(ORIGIN + DOWN * 0.05)
@@ -802,11 +802,11 @@ class Phase1MerkleDagProgressiveSlide(HyperonPhase1RefinedBase):
         tag = self.text_box("Merkle-DAG: what is added", width=6.0, color=ORANGE, font_size=29)
         tag.to_edge(UP, buff=0.35)
 
-        left_root = self.text_box("h_root_A", width=2.2, color=BLUE_B, font_size=17).move_to(LEFT * 3.0 + UP * 0.9)
-        right_root = self.text_box("h_root_B", width=2.2, color=BLUE_B, font_size=17).move_to(RIGHT * 0.3 + UP * 0.9)
-        left_mid = self.text_box("h_mid_A", width=2.2, color=TEAL_B, font_size=17).move_to(LEFT * 3.6 + DOWN * 0.2)
-        right_mid = self.text_box("h_mid_B", width=2.2, color=TEAL_B, font_size=17).move_to(RIGHT * 0.9 + DOWN * 0.2)
-        shared = self.text_box("h(shared_rule)", width=2.7, color=GREEN_B, font_size=16).move_to(LEFT * 1.35 + DOWN * 1.6)
+        left_root = self.text_box("h_root_A", width=2.2, color=BLUE_B, font_size=17).move_to(LEFT * 4.55 + UP * 0.9)
+        right_root = self.text_box("h_root_B", width=2.2, color=BLUE_B, font_size=17).move_to(LEFT * 2.0 + UP * 0.9)
+        left_mid = self.text_box("h_mid_A", width=2.2, color=TEAL_B, font_size=17).move_to(LEFT * 4.9 + DOWN * 0.2)
+        right_mid = self.text_box("h_mid_B", width=2.2, color=TEAL_B, font_size=17).move_to(LEFT * 1.65 + DOWN * 0.2)
+        shared = self.text_box("h(shared_rule)", width=2.7, color=GREEN_B, font_size=16).move_to(LEFT * 3.25 + DOWN * 1.55)
 
         links = VGroup(
             Line(left_root.get_bottom(), left_mid.get_top(), color=GRAY_B, stroke_width=2.5),
@@ -822,9 +822,9 @@ class Phase1MerkleDagProgressiveSlide(HyperonPhase1RefinedBase):
                 "No duplicate copy of the same sub-structure",
                 "Content-hash identity keeps integrity verifiable",
             ],
-            width=6.9,
+            width=4.55,
             title_color=GREEN_B,
-        ).to_edge(RIGHT, buff=0.35).shift(DOWN * 0.25)
+        ).to_edge(RIGHT, buff=0.35).shift(DOWN * 0.12)
 
         self.play(FadeIn(tag), run_time=0.45)
         self.play(FadeIn(VGroup(left_root, right_root, left_mid, right_mid)), run_time=0.7)
@@ -900,7 +900,7 @@ class Phase1TrieShapeSlide(HyperonPhase1RefinedBase):
 
         old_title = Text("Flat list", font_size=24, color=RED_B).move_to(LEFT * 4.25 + UP * 1.9)
         rows = VGroup()
-        row_labels = ["thought_0001", "thought_0002", "thought_0003", "...", "thought_9999"]
+        row_labels = ["Apple", "Apply", "Application", "...", "Appreciate"]
         for i, label in enumerate(row_labels):
             row = RoundedRectangle(
                 corner_radius=0.04,
@@ -928,28 +928,29 @@ class Phase1TrieShapeSlide(HyperonPhase1RefinedBase):
 
         new_title = Text("Prefix tree", font_size=24, color=GREEN_B).move_to(RIGHT * 3.35 + UP * 1.9)
         positions = {
-            "root": RIGHT * 3.35 + UP * 1.05,
-            "C": RIGHT * 2.45 + UP * 0.1,
-            "A": RIGHT * 3.35 + DOWN * 0.75,
-            "T": RIGHT * 2.45 + DOWN * 1.65,
-            "R": RIGHT * 4.25 + DOWN * 1.65,
+            "root": RIGHT * 3.35 + UP * 1.18,
+            "APPL": RIGHT * 3.35 + UP * 0.25,
+            "E": RIGHT * 2.15 + DOWN * 0.78,
+            "Y": RIGHT * 3.35 + DOWN * 0.78,
+            "ICATION": RIGHT * 4.65 + DOWN * 0.78,
         }
         root = self._word_node("root", positions["root"], color=GRAY_A, radius=0.31)
-        c = self._word_node("C", positions["C"], color=YELLOW_B)
-        a = self._word_node("A", positions["A"], color=YELLOW_B)
-        t = self._word_node("T", positions["T"], color=GREEN_B)
-        r = self._word_node("R", positions["R"], color=GREEN_B)
-        tree_nodes = VGroup(root, c, a, t, r)
+        appl = self.text_box("APPL", width=1.35, color=YELLOW_B, font_size=18, padding=0.14).move_to(positions["APPL"])
+        e = self._word_node("E", positions["E"], color=GREEN_B)
+        y_node = self._word_node("Y", positions["Y"], color=GREEN_B)
+        ication = self.text_box("ICATION", width=1.55, color=GREEN_B, font_size=14, padding=0.13).move_to(positions["ICATION"])
+        tree_nodes = VGroup(root, appl, e, y_node, ication)
 
         tree_edges = VGroup(
-            Line(root.get_bottom(), c.get_top(), color=YELLOW_B, stroke_width=4),
-            Line(c.get_bottom(), a.get_top(), color=YELLOW_B, stroke_width=4),
-            Line(a.get_bottom(), t.get_top(), color=GREEN_B, stroke_width=3),
-            Line(a.get_bottom(), r.get_top(), color=GREEN_B, stroke_width=3),
+            Line(root.get_bottom(), appl.get_top(), color=YELLOW_B, stroke_width=4),
+            Line(appl.get_bottom(), e.get_top(), color=GREEN_B, stroke_width=3),
+            Line(appl.get_bottom(), y_node.get_top(), color=GREEN_B, stroke_width=3),
+            Line(appl.get_bottom(), ication.get_top(), color=GREEN_B, stroke_width=3),
         )
-        shared = Text("shared prefix: C-A", font_size=18, color=YELLOW_B).next_to(c, LEFT, buff=0.25)
-        cat = Text("CAT", font_size=18, color=GREEN_B).next_to(t, DOWN, buff=0.12)
-        car = Text("CAR", font_size=18, color=GREEN_B).next_to(r, DOWN, buff=0.12)
+        shared = Text("shared prefix: APPL", font_size=18, color=YELLOW_B).next_to(appl, LEFT, buff=0.25)
+        apple = Text("APPLE", font_size=16, color=GREEN_B).next_to(e, DOWN, buff=0.1)
+        apply = Text("APPLY", font_size=16, color=GREEN_B).next_to(y_node, DOWN, buff=0.1)
+        application = Text("APPLICATION", font_size=15, color=GREEN_B).next_to(ication, DOWN, buff=0.1)
 
         bullets = self.bullet_panel(
             "Trie memory principle",
@@ -967,8 +968,8 @@ class Phase1TrieShapeSlide(HyperonPhase1RefinedBase):
         self.play(Create(divider), FadeIn(old_title), FadeIn(new_title), run_time=0.45)
         self.play(FadeIn(rows, lag_ratio=0.08), run_time=0.85)
         self.play(GrowArrow(scan_arrow), FadeIn(slow_label, shift=RIGHT * 0.08), run_time=0.55)
-        self.play(Create(tree_edges[:2]), FadeIn(VGroup(root, c, a)), FadeIn(shared), run_time=0.9)
-        self.play(Create(tree_edges[2:]), FadeIn(VGroup(t, r, cat, car)), run_time=0.75)
+        self.play(Create(tree_edges[:1]), FadeIn(VGroup(root, appl)), FadeIn(shared), run_time=0.9)
+        self.play(Create(tree_edges[1:]), FadeIn(VGroup(e, y_node, ication, apple, apply, application)), run_time=0.75)
         self.play(FadeIn(bullets, shift=UP * 0.08), run_time=0.75)
         self.next_slide()
 
@@ -1903,13 +1904,13 @@ class Phase1PredictiveCodingMathSlide(Phase1LearningBase):
             body_size=16,
         ).move_to(LEFT * 4.0 + DOWN * 1.45)
 
-        origin = RIGHT * 1.35 + DOWN * 1.75
+        origin = RIGHT * 1.35 + DOWN * 2.15
         x_axis = Arrow(origin, origin + RIGHT * 4.2, buff=0, color=GRAY_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.04)
-        y_axis = Arrow(origin, origin + UP * 2.65, buff=0, color=GRAY_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.05)
+        y_axis = Arrow(origin, origin + UP * 2.05, buff=0, color=GRAY_B, stroke_width=2.6, max_tip_length_to_length_ratio=0.06)
         curve_points = []
         for i in range(22):
             x = i / 21
-            y = (1.0 - x) ** 2 * 2.0 + 0.25
+            y = (1.0 - x) ** 2 * 1.45 + 0.25
             curve_points.append(origin + RIGHT * (x * 3.75 + 0.18) + UP * y)
         curve = VMobject(color=ORANGE, stroke_width=4)
         curve.set_points_smoothly(curve_points)
@@ -1918,9 +1919,9 @@ class Phase1PredictiveCodingMathSlide(Phase1LearningBase):
         time_label = Text("time t", font_size=16, color=GRAY_A).next_to(x_axis, DOWN, buff=0.12)
         gd_label = Text("gradient descent", font_size=16, color=YELLOW_B).next_to(desc, UP, buff=0.08)
 
-        error_formula = self.formula_box("e = x - f(mu)", width=3.1, color=ORANGE, font_size=23).move_to(RIGHT * 2.9 + UP * 1.55)
-        learn_formula = self.formula_box("dmu/dt ∝ - ∂(e^2)/∂mu", width=4.4, color=YELLOW_B, font_size=21).move_to(RIGHT * 2.9 + UP * 0.72)
-        note = self.text_box("Learning updates only where prediction failed.", width=5.55, color=GRAY_A, font_size=17, padding=0.15).to_edge(DOWN, buff=0.28).shift(RIGHT * 2.65)
+        error_formula = self.formula_box("e = x - f(mu)", width=3.2, color=ORANGE, font_size=23).move_to(RIGHT * 3.35 + UP * 1.55)
+        learn_formula = self.formula_box("dmu/dt ∝ - ∂(e^2)/∂mu", width=4.65, color=YELLOW_B, font_size=20).move_to(RIGHT * 3.35 + UP * 0.72)
+        note = self.text_box("Learning updates only where prediction failed.", width=5.4, color=GRAY_A, font_size=16, padding=0.15).to_edge(DOWN, buff=0.25).shift(RIGHT * 2.75)
 
         self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
         self.play(FadeIn(VGroup(sensory, prediction, error_node, error_text, error_out)), Create(in_arrows), run_time=0.85)
@@ -1938,28 +1939,29 @@ class Phase1CausalCodingSimpsonSlide(Phase1LearningBase):
         subtitle = Text("Simpson's Paradox shows why pattern matching is not enough", font_size=20, color=GRAY_A)
         subtitle.next_to(tag, DOWN, buff=0.14)
 
-        agg_origin = LEFT * 5.7 + DOWN * 0.45
-        agg_plot = self.small_plot(agg_origin, 2.65, 2.05, "Aggregated view", color=YELLOW_B)
-        agg_line = Line(agg_origin + RIGHT * 0.45 + UP * 0.55, agg_origin + RIGHT * 2.25 + UP * 1.55, color=YELLOW_B, stroke_width=4)
+        agg_origin = LEFT * 5.55 + UP * 0.45
+        agg_plot = self.small_plot(agg_origin, 2.7, 1.35, "Aggregated view", color=YELLOW_B)
+        agg_line = Line(agg_origin + RIGHT * 0.45 + UP * 0.35, agg_origin + RIGHT * 2.25 + UP * 1.05, color=YELLOW_B, stroke_width=4)
         agg_dots = VGroup(
-            Dot(agg_origin + RIGHT * 0.55 + UP * 0.65, radius=0.055, color=YELLOW_B),
-            Dot(agg_origin + RIGHT * 0.9 + UP * 0.75, radius=0.055, color=YELLOW_B),
-            Dot(agg_origin + RIGHT * 1.95 + UP * 1.35, radius=0.055, color=YELLOW_B),
-            Dot(agg_origin + RIGHT * 2.25 + UP * 1.58, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 0.55 + UP * 0.42, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 0.9 + UP * 0.50, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 1.95 + UP * 0.92, radius=0.055, color=YELLOW_B),
+            Dot(agg_origin + RIGHT * 2.25 + UP * 1.10, radius=0.055, color=YELLOW_B),
         )
-        agg_label = self.text_box("Drug helps?", width=1.85, color=YELLOW_B, font_size=15, padding=0.12).next_to(agg_plot, DOWN, buff=0.12)
+        agg_label = self.text_box("Drug helps?", width=1.85, color=YELLOW_B, font_size=15, padding=0.12)
+        agg_label.next_to(agg_plot, RIGHT, buff=0.25).shift(DOWN * 0.05)
 
-        strat_origin = LEFT * 1.45 + DOWN * 0.45
-        strat_plot = self.small_plot(strat_origin, 2.65, 2.05, "Stratified by Z", color=BLUE_B)
-        men_line = Line(strat_origin + RIGHT * 0.45 + UP * 1.65, strat_origin + RIGHT * 2.25 + UP * 1.25, color=BLUE_B, stroke_width=4)
-        women_line = Line(strat_origin + RIGHT * 0.45 + UP * 0.95, strat_origin + RIGHT * 2.25 + UP * 0.55, color=GREEN_B, stroke_width=4)
+        strat_origin = LEFT * 5.55 + DOWN * 1.95
+        strat_plot = self.small_plot(strat_origin, 2.7, 1.35, "Stratified by Z", color=BLUE_B)
+        men_line = Line(strat_origin + RIGHT * 0.45 + UP * 1.05, strat_origin + RIGHT * 2.25 + UP * 0.78, color=BLUE_B, stroke_width=4)
+        women_line = Line(strat_origin + RIGHT * 0.45 + UP * 0.58, strat_origin + RIGHT * 2.25 + UP * 0.30, color=GREEN_B, stroke_width=4)
         men_label = Text("Men", font_size=13, color=BLUE_B).next_to(men_line, UP, buff=0.04)
         women_label = Text("Women", font_size=13, color=GREEN_B).next_to(women_line, DOWN, buff=0.04)
         strat_label = self.text_box("Drug hurts\ninside each group", width=2.3, color=RED_B, font_size=14, padding=0.12).next_to(strat_plot, DOWN, buff=0.12)
 
-        z = self.causal_node("Z\nGender", RIGHT * 4.25 + UP * 0.9, BLUE_B, radius=0.38, font_size=15)
-        x = self.causal_node("X\nTreatment", RIGHT * 3.25 + DOWN * 0.72, YELLOW_B, radius=0.38, font_size=13)
-        y = self.causal_node("Y\nRecovery", RIGHT * 5.35 + DOWN * 0.72, GREEN_B, radius=0.38, font_size=13)
+        z = self.causal_node("Z\nGender", RIGHT * 3.95 + UP * 1.1, BLUE_B, radius=0.38, font_size=15)
+        x = self.causal_node("X\nTreatment", RIGHT * 2.75 + DOWN * 0.45, YELLOW_B, radius=0.38, font_size=13)
+        y = self.causal_node("Y\nRecovery", RIGHT * 5.1 + DOWN * 0.45, GREEN_B, radius=0.38, font_size=13)
         z_to_x = Arrow(z.get_bottom(), x.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
         z_to_y = Arrow(z.get_bottom(), y.get_top(), buff=0.08, color=BLUE_B, stroke_width=4)
         x_to_y = Arrow(x.get_right(), y.get_left(), buff=0.08, color=YELLOW_B, stroke_width=4)
@@ -1972,7 +1974,7 @@ class Phase1CausalCodingSimpsonSlide(Phase1LearningBase):
             color=GREEN_B,
             title_size=18,
             body_size=14,
-        ).move_to(RIGHT * 4.35 + DOWN * 1.95)
+        ).move_to(RIGHT * 3.95 + DOWN * 2.12)
 
         self.play(FadeIn(tag), FadeIn(subtitle, shift=UP * 0.08), run_time=0.55)
         self.play(Create(agg_plot), Create(agg_line), FadeIn(agg_dots), FadeIn(agg_label), run_time=0.8)
@@ -2079,36 +2081,43 @@ class Phase1BackdoorAdjustmentSlide(Phase1LearningBase):
             font_size=18,
         ).move_to(DOWN * 0.82)
 
-        row_y = DOWN * 1.42
-        headers = VGroup(
-            Text("Z subgroup", font_size=16, color=BLUE_B),
-            Text("Recovery if treated", font_size=16, color=GREEN_B),
-            Text("Population weight", font_size=16, color=YELLOW_B),
-            Text("Contribution", font_size=16, color=ORANGE),
-        ).arrange(RIGHT, buff=0.62).move_to(row_y + LEFT * 0.1)
-        men_row = VGroup(
-            Text("Men", font_size=16, color=GRAY_A),
-            Text("0.60", font_size=16, color=GREEN_B),
-            Text("0.50", font_size=16, color=YELLOW_B),
-            Text("0.30", font_size=16, color=ORANGE),
-        ).arrange(RIGHT, buff=1.65).next_to(headers, DOWN, buff=0.22)
-        women_row = VGroup(
-            Text("Women", font_size=16, color=GRAY_A),
-            Text("0.40", font_size=16, color=GREEN_B),
-            Text("0.50", font_size=16, color=YELLOW_B),
-            Text("0.20", font_size=16, color=ORANGE),
-        ).arrange(RIGHT, buff=1.5).next_to(men_row, DOWN, buff=0.16)
+        col_x = [-3.75, -1.15, 1.25, 3.55]
+        header_y = -1.36
+        men_y = -1.82
+        women_y = -2.20
+        headers = VGroup(*[
+            Text(label, font_size=15, color=color).move_to(RIGHT * x + UP * header_y)
+            for x, label, color in zip(
+                col_x,
+                ["Z subgroup", "Recovery if treated", "Population weight", "Contribution"],
+                [BLUE_B, GREEN_B, YELLOW_B, ORANGE],
+            )
+        ])
+        men_row = VGroup(*[
+            Text(label, font_size=16, color=color).move_to(RIGHT * x + UP * men_y)
+            for x, label, color in zip(col_x, ["Men", "0.60", "0.50", "0.30"], [GRAY_A, GREEN_B, YELLOW_B, ORANGE])
+        ])
+        women_row = VGroup(*[
+            Text(label, font_size=16, color=color).move_to(RIGHT * x + UP * women_y)
+            for x, label, color in zip(col_x, ["Women", "0.40", "0.50", "0.20"], [GRAY_A, GREEN_B, YELLOW_B, ORANGE])
+        ])
         table = VGroup(headers, men_row, women_row)
         table_box = RoundedRectangle(
             corner_radius=0.08,
-            width=9.2,
-            height=1.55,
+            width=9.25,
+            height=1.35,
             stroke_color=GRAY_B,
             stroke_width=1.7,
             fill_color=BLACK,
             fill_opacity=0.22,
-        ).move_to(table)
-        table_group = VGroup(table_box, table).move_to(DOWN * 1.92 + LEFT * 0.15)
+        ).move_to(UP * -1.80)
+        table_rules = VGroup(
+            Line(LEFT * 4.45 + UP * -1.58, RIGHT * 4.45 + UP * -1.58, color=GRAY_D, stroke_width=1.2),
+            Line(RIGHT * -2.45 + UP * -1.18, RIGHT * -2.45 + UP * -2.42, color=GRAY_D, stroke_width=1.0),
+            Line(RIGHT * 0.05 + UP * -1.18, RIGHT * 0.05 + UP * -2.42, color=GRAY_D, stroke_width=1.0),
+            Line(RIGHT * 2.45 + UP * -1.18, RIGHT * 2.45 + UP * -2.42, color=GRAY_D, stroke_width=1.0),
+        )
+        table_group = VGroup(table_box, table_rules, table)
 
         naive = self.text_box("Naive pooled\nP(Y=1 | X=1) = 0.80", width=3.1, color=RED_B, font_size=15, padding=0.14).to_edge(DOWN, buff=0.25).shift(LEFT * 4.55)
         adjusted = self.text_box("Adjusted causal\n0.30 + 0.20 = 0.50", width=3.35, color=GREEN_B, font_size=15, padding=0.14).to_edge(DOWN, buff=0.25).shift(RIGHT * 4.35)

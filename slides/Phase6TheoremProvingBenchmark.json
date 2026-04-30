@@ -1,0 +1,33 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase6TheoremProvingBenchmark/7d0b328dcc7073670314edd7495e41c3a6c2bf85bfc5b44078916f95fb268f7c.mp4",
+      "rev_file": "slides/files/Phase6TheoremProvingBenchmark/7d0b328dcc7073670314edd7495e41c3a6c2bf85bfc5b44078916f95fb268f7c_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase6TheoremProvingBenchmark/aa7c8c608234d847f3d37a9ca58737841327a123ea352704e2584f719a324b46.mp4",
+      "rev_file": "slides/files/Phase6TheoremProvingBenchmark/aa7c8c608234d847f3d37a9ca58737841327a123ea352704e2584f719a324b46_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

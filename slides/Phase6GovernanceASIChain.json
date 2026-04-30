@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase6GovernanceASIChain/d340f6a7c4ae99905635f409617763f5a89bccf46963edfcc87dbe477d65f13f.mp4",
+      "rev_file": "slides/files/Phase6GovernanceASIChain/d340f6a7c4ae99905635f409617763f5a89bccf46963edfcc87dbe477d65f13f_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase6GovernanceASIChain/e731a01bc1d124d7c2103e0e527365e0c5029c9997680dc4cb9bb460466b487b.mp4",
+      "rev_file": "slides/files/Phase6GovernanceASIChain/e731a01bc1d124d7c2103e0e527365e0c5029c9997680dc4cb9bb460466b487b_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase6GovernanceASIChain/9b2f403ff6be54c35bcb1cef7d2dddd0eb67a3410276a2b813ac2388304e8bfe.mp4",
+      "rev_file": "slides/files/Phase6GovernanceASIChain/9b2f403ff6be54c35bcb1cef7d2dddd0eb67a3410276a2b813ac2388304e8bfe_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

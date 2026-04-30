@@ -42,7 +42,7 @@ def tag(text, color=TEAL_B):
 
 class Phase3TwoLoopDesign(Slide):
     def construct(self):
-        hdr = Text("3.1 — PRIMUS: Two Loops Over One Memory", font_size=31, color=BLUE_B)
+        hdr = Text("PRIMUS: Two Loops Over One Memory", font_size=31, color=BLUE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Goal-Directed Loop  +  Ambient Loop", color=BLUE_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -116,7 +116,7 @@ class Phase3TwoLoopDesign(Slide):
 
 class Phase3PLNReasoningEngine(Slide):
     def construct(self):
-        hdr = Text("3.5 — PLN: Probabilistic Logic Networks", font_size=32, color=GREEN_B)
+        hdr = Text("PLN: Probabilistic Logic Networks", font_size=32, color=GREEN_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Deduction · Induction · Abduction", color=GREEN_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -194,7 +194,7 @@ class Phase3PLNReasoningEngine(Slide):
 
 class Phase3ECANAttentionSystem(Slide):
     def construct(self):
-        hdr = Text("3.7 — ECAN: Economic Attention Network", font_size=32, color=YELLOW_B)
+        hdr = Text("ECAN: Economic Attention Network", font_size=32, color=YELLOW_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("STI · LTI · Wages · Rent · Diffusion", color=YELLOW_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -248,7 +248,7 @@ class Phase3ECANAttentionSystem(Slide):
 
 class Phase3MOSESGeoEvo(Slide):
     def construct(self):
-        hdr = Text("3.6 — MOSES / GEO-EVO: Evolutionary Program Learning", font_size=28, color=ORANGE)
+        hdr = Text("MOSES / GEO-EVO: Evolutionary Program Learning", font_size=28, color=ORANGE)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("EDA · Demes · Geodesic Two-Ended Search", color=ORANGE).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -301,7 +301,7 @@ class Phase3MOSESGeoEvo(Slide):
 
 class Phase3WILLIAMCompression(Slide):
     def construct(self):
-        hdr = Text("3.8 — WILLIAM: Compression-Driven Learning", font_size=32, color=PURPLE_B)
+        hdr = Text("WILLIAM: Compression-Driven Learning", font_size=32, color=PURPLE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("MDL Principle · Pattern Extraction · Template Formation", color=PURPLE_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -345,7 +345,7 @@ class Phase3WILLIAMCompression(Slide):
 
 class Phase3PatternMiningBlending(Slide):
     def construct(self):
-        hdr = Text("3.9 — Pattern Mining & Concept Blending", font_size=31, color=TEAL_B)
+        hdr = Text("Pattern Mining & Concept Blending", font_size=31, color=TEAL_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Creativity via Structural Merging", color=TEAL_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)

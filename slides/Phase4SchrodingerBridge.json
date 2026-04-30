@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4SchrodingerBridge/d5cfb6b69d58f675d77dc07626bb0bf95c503b15a6d6aed88e309022acb544d9.mp4",
+      "rev_file": "slides/files/Phase4SchrodingerBridge/d5cfb6b69d58f675d77dc07626bb0bf95c503b15a6d6aed88e309022acb544d9_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4SchrodingerBridge/bf35064a873c99d7c379250ef9de4b92329a80332014a138b7583d0376b2d261.mp4",
+      "rev_file": "slides/files/Phase4SchrodingerBridge/bf35064a873c99d7c379250ef9de4b92329a80332014a138b7583d0376b2d261_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4SchrodingerBridge/384ed4a5d4f872735fa5c6bb292fee69300391d311b803cefb8244167805223d.mp4",
+      "rev_file": "slides/files/Phase4SchrodingerBridge/384ed4a5d4f872735fa5c6bb292fee69300391d311b803cefb8244167805223d_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

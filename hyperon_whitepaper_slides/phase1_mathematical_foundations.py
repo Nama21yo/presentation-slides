@@ -60,7 +60,7 @@ def x_mark(pos, col=RED_B, s=0.32):
 
 class Phase1SetsRelationsGraphs(Slide):
     def construct(self):
-        hdr = Text("1.1 — Sets → Relations → Graphs", font_size=34, color=BLUE_B)
+        hdr = Text("Sets → Relations → Graphs", font_size=34, color=BLUE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Mathematical Foundations").next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -109,7 +109,7 @@ class Phase1SetsRelationsGraphs(Slide):
 
 class Phase1Hypergraphs(Slide):
     def construct(self):
-        hdr = Text("1.2 — Hypergraphs", font_size=34, color=GREEN_B)
+        hdr = Text("Hypergraphs", font_size=34, color=GREEN_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Multi-Node Edges", color=GREEN_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -165,7 +165,7 @@ class Phase1Hypergraphs(Slide):
 
 class Phase1MetagraphsCritical(Slide):
     def construct(self):
-        hdr = Text("1.3 — Metagraphs  ★ CRITICAL ★", font_size=33, color=PURPLE_B)
+        hdr = Text("Metagraphs  ★ CRITICAL ★", font_size=33, color=PURPLE_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Links are First-Class Atoms", color=PURPLE_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -229,7 +229,7 @@ class Phase1MetagraphsCritical(Slide):
 
 class Phase1ContentAddressing(Slide):
     def construct(self):
-        hdr = Text("1.4 — Content Addressing & CIDs", font_size=34, color=YELLOW_B)
+        hdr = Text("Content Addressing & CIDs", font_size=34, color=YELLOW_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Hash = Identity", color=YELLOW_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -273,7 +273,7 @@ class Phase1ContentAddressing(Slide):
 
 class Phase1MerkleStructures(Slide):
     def construct(self):
-        hdr = Text("1.4.2 — Merkle Tree & Merkle-DAG", font_size=34, color=GREEN_B)
+        hdr = Text("Merkle Tree & Merkle-DAG", font_size=34, color=GREEN_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Immutability + Verifiable Updates", color=GREEN_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -353,7 +353,7 @@ class Phase1MerkleStructures(Slide):
 
 class Phase1TriePathMap(Slide):
     def construct(self):
-        hdr = Text("1.5 — Trie & PathMap (MORK's Core)", font_size=34, color=ORANGE)
+        hdr = Text("Trie & PathMap (MORK's Core)", font_size=34, color=ORANGE)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Prefix-based Address Space", color=ORANGE).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -421,7 +421,7 @@ class Phase1TriePathMap(Slide):
 
 class Phase1Quantales(Slide):
     def construct(self):
-        hdr = Text("1.6 — Quantales: Algebra of Reasoning", font_size=34, color=TEAL_B)
+        hdr = Text("Quantales: Algebra of Reasoning", font_size=34, color=TEAL_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Lattice + Multiplication", color=TEAL_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -473,7 +473,7 @@ class Phase1Quantales(Slide):
 
 class Phase1PLNTruthValues(Slide):
     def construct(self):
-        hdr = Text("1.7 — Uncertainty: PLN Truth Values", font_size=34, color=GREEN_B)
+        hdr = Text("Uncertainty: PLN Truth Values", font_size=34, color=GREEN_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("(strength, confidence)", color=GREEN_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)
@@ -491,9 +491,9 @@ class Phase1PLNTruthValues(Slide):
         tv_box = RoundedRectangle(corner_radius=0.2, width=6.5, height=2.0,
                                   stroke_color=GREEN_B, stroke_width=2.5,
                                   fill_color=BLACK, fill_opacity=0.25).move_to(DOWN * 0.4)
-        tv_formula = MathTex(
-            r"\text{TruthValue} = \langle s, c \rangle",
-            font_size=36, color=GREEN_B,
+        tv_formula = Text(
+            "TruthValue = <s, c>",
+            font_size=34, color=GREEN_B, font="Noto Sans Mono",
         ).move_to(tv_box).shift(UP * 0.4)
         tv_explain = Text(
             "s = strength (how often true?)    c = confidence (how much data?)",
@@ -523,7 +523,7 @@ class Phase1PLNTruthValues(Slide):
 
 class Phase1PredictiveCoding(Slide):
     def construct(self):
-        hdr = Text("1.8 — Predictive Coding & Causal Coding", font_size=33, color=TEAL_B)
+        hdr = Text("Predictive Coding & Causal Coding", font_size=33, color=TEAL_B)
         hdr.to_edge(UP, buff=0.35)
         tg = tag("Local Updates · No Global Backprop", color=TEAL_B).next_to(hdr, DOWN, buff=0.25)
         self.play(FadeIn(hdr), FadeIn(tg), run_time=0.7)

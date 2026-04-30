@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4GeodesicControl/984f41a58a24ad6e340911b3bd54635277a0f580051135b2d092e08b894fcfda.mp4",
+      "rev_file": "slides/files/Phase4GeodesicControl/984f41a58a24ad6e340911b3bd54635277a0f580051135b2d092e08b894fcfda_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4GeodesicControl/89700768d8591b6ec65615dbee374689ccdeef9a3c9788217425eab405346030.mp4",
+      "rev_file": "slides/files/Phase4GeodesicControl/89700768d8591b6ec65615dbee374689ccdeef9a3c9788217425eab405346030_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase4GeodesicControl/45c7b228f661c445e9f7bb2c6c32e30360805aabd897e4bf15089e69c41186d1.mp4",
+      "rev_file": "slides/files/Phase4GeodesicControl/45c7b228f661c445e9f7bb2c6c32e30360805aabd897e4bf15089e69c41186d1_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}

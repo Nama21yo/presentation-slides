@@ -1,0 +1,57 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PLNTruthValues/34b77d14ea53c5c5c1af0494f1c5f30959ecea95f1f7390a61f4d1af6e72b601.mp4",
+      "rev_file": "slides/files/Phase1PLNTruthValues/34b77d14ea53c5c5c1af0494f1c5f30959ecea95f1f7390a61f4d1af6e72b601_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PLNTruthValues/02079af1089683d8d47be39f70141e3043ce3e2c26261d8a43d7476be5fd4f4c.mp4",
+      "rev_file": "slides/files/Phase1PLNTruthValues/02079af1089683d8d47be39f70141e3043ce3e2c26261d8a43d7476be5fd4f4c_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PLNTruthValues/1e614b5f90ad6aeb34542abd3bd8accacff554fce647620af762f76d020d33e1.mp4",
+      "rev_file": "slides/files/Phase1PLNTruthValues/1e614b5f90ad6aeb34542abd3bd8accacff554fce647620af762f76d020d33e1_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Phase1PLNTruthValues/2d23600f9efd508776234a4e33d28332ffca6e7cb6c5289cd24d336f40377db0.mp4",
+      "rev_file": "slides/files/Phase1PLNTruthValues/2d23600f9efd508776234a4e33d28332ffca6e7cb6c5289cd24d336f40377db0_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}
